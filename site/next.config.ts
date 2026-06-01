@@ -1,10 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Static export for GitHub Pages (served at root: bilalsabry.github.io)
-  output: "export",
-  images: { unoptimized: true },
-  trailingSlash: true,
+  // Deployed on Vercel — standard Next.js build (the app lives in /site,
+  // set as the project's Root Directory in the Vercel import step).
 };
 
 export default nextConfig;
