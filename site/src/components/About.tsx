@@ -10,11 +10,13 @@ function Photo({
   label,
   ratio = "4 / 5",
   accent = "#6ef0c8",
+  position = "center",
 }: {
   src: string;
   label: string;
   ratio?: string;
   accent?: string;
+  position?: string;
 }) {
   return (
     <div
@@ -56,6 +58,7 @@ function Photo({
           width: "100%",
           height: "100%",
           objectFit: "cover",
+          objectPosition: position,
           // grade daylight photos toward the cinematic palette
           filter: "contrast(1.04) saturate(0.92) brightness(0.97)",
         }}
@@ -134,7 +137,12 @@ export default function About() {
         >
           {/* portrait */}
           <Reveal>
-            <Photo src="/portrait.jpg" label="Berkeley ’24" ratio="4 / 5" />
+            <Photo
+              src="/portrait.jpg"
+              label="Berkeley ’24"
+              ratio="4 / 5"
+              position="center 22%"
+            />
           </Reveal>
 
           {/* bio + facts + candids */}
