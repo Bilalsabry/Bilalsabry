@@ -1,6 +1,6 @@
 "use client";
 
-import ShaderBackground from "./ShaderBackground";
+import HeroVideoPlayer from "./HeroVideoPlayer";
 import Scramble from "./Scramble";
 import { profile } from "@/lib/data";
 
@@ -16,7 +16,8 @@ export default function Hero() {
         overflow: "hidden",
       }}
     >
-      <ShaderBackground />
+      {/* Remotion-driven cinematic background */}
+      <HeroVideoPlayer />
 
       <div
         className="container-x"
@@ -45,6 +46,13 @@ export default function Hero() {
           <span>{profile.location}</span>
           <span>Builder × Operator × Thinker</span>
           <span>Est. UC Berkeley ’24</span>
+        </div>
+
+        <div
+          className="eyebrow"
+          style={{ marginBottom: 18 }}
+        >
+          {profile.greeting}
         </div>
 
         <h1

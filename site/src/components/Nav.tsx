@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 const items = [
+  { label: "About", href: "#about" },
   { label: "Work", href: "#work" },
   { label: "Approach", href: "#approach" },
   { label: "Path", href: "#path" },

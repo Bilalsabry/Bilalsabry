@@ -15,7 +15,7 @@ export default function Approach() {
     >
       <div className="container-x">
         <span className="eyebrow" style={{ display: "block", marginBottom: 18 }}>
-          ( 04 )&nbsp;&nbsp;How I operate
+          ( 05 )&nbsp;&nbsp;How I operate
         </span>
         <h2
           style={{

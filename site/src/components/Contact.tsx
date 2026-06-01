@@ -30,7 +30,7 @@ export default function Contact() {
       />
       <div className="container-x" style={{ position: "relative" }}>
         <span className="eyebrow" style={{ display: "block", marginBottom: 28 }}>
-          ( 06 )&nbsp;&nbsp;Let’s talk
+          ( 07 )&nbsp;&nbsp;Let’s talk
         </span>
 
         <a

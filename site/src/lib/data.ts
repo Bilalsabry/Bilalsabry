@@ -1,11 +1,11 @@
 // ---------------------------------------------------------------------------
 // Site content. All copy lives here so it's trivial to edit.
-// Sourced from Bilal Sabry's CV — placeholder polish welcome.
 // ---------------------------------------------------------------------------
 
 export const profile = {
   name: "Bilal Sabry",
-  roles: ["Founder", "Engineer", "Operator", "Strategist", "Analyst"],
+  greeting: "Hi, I’m Bilal",
+  roles: ["Founder", "Engineer", "Operator", "Strategist"],
   location: "Princeton, NJ",
   email: "bilal@berkeley.edu",
   links: {
@@ -13,17 +13,25 @@ export const profile = {
     github: "https://github.com/Bilalsabry",
     krux: "https://krux.bio",
   },
-  // The one-line thesis, set in the display serif.
+  // Short hero tagline, famous-personal-site voice.
   thesis:
-    "I build companies and the software that runs them — moving between the code, the deal, and the policy without losing the thread.",
+    "I build companies — and the software that runs them. I’m happiest in the overlap between the code, the deal, and the room where strategy gets set.",
 };
 
+// Short lines that cycle through the Remotion hero as a "facts ticker".
+export const facts = [
+  "Founder & engineer — Krux AI",
+  "Production AI, shipped in Rust",
+  "Advised a government through a sovereign default",
+  "Economics × Data Science, UC Berkeley",
+];
+
 export const manifesto = [
-  "I operate across three registers most people keep separate:",
-  "I ship production software, I run the numbers that decide whether a business lives,",
-  "and I sit in the room where the strategy is set.",
-  "The throughline is leverage — finding the one decision that moves everything,",
-  "then building the system that makes it repeatable.",
+  "I’m a builder who never picked a lane.",
+  "I write production software, I run the numbers that decide whether a business lives,",
+  "and I sit in the rooms where the strategy gets set.",
+  "The throughline is leverage —",
+  "find the one decision that moves everything, then build the system that makes it repeatable.",
 ];
 
 export type Stat = {
@@ -38,33 +46,32 @@ export type Stat = {
 
 export const stats: Stat[] = [
   {
-    value: "48%",
-    target: 48,
-    suffix: "%",
-    label: "Revenue growth, YoY",
-    sub: "Scaled a pharma CDMO from <5% to 48% — past $25M.",
-  },
-  {
-    value: "2,000%+",
-    target: 2000,
-    suffix: "%+",
-    label: "EBITDA growth",
-    sub: "Off a small base, in a single fiscal year. Overhead held under 7%.",
-  },
-  {
     value: "$2.9B",
     target: 2.9,
     prefix: "$",
     suffix: "B",
-    label: "IMF bailout package",
-    sub: "Built the fiscal scenarios used in real-time sovereign negotiations.",
+    label: "Sovereign bailout modeled",
+    sub: "Built the fiscal scenarios used in live IMF negotiations for Sri Lanka.",
+  },
+  {
+    value: "25h",
+    target: 25,
+    suffix: "h→min",
+    label: "RFP cycle, compressed",
+    sub: "The pharma proposal process Krux AI turns from a day into minutes.",
   },
   {
     value: "2.5 yrs",
     target: 2.5,
     suffix: " yrs",
-    label: "To a Berkeley degree",
-    sub: "B.A. Economics & Data Science. Two majors, half the time.",
+    label: "To a double Berkeley degree",
+    sub: "B.A. Economics & Data Science — two majors, half the time.",
+  },
+  {
+    value: "21",
+    target: 21,
+    label: "At the UN General Assembly",
+    sub: "Delegate with the Sri Lankan Mission; researcher to the Foreign Minister.",
   },
 ];
 
@@ -88,7 +95,7 @@ export const projects: Project[] = [
     title: "Krux AI",
     tagline: "The AI company brain for pharma contract manufacturing.",
     description:
-      "Founder & engineer. Compresses 25+ hour RFP response cycles into regulator-grade proposals. Built the full product surface — scoped retrieval, a compliance-matrix extractor for 300-page RFPs, a versioned answer library, and a tamper-evident audit export. First paid design partner signed.",
+      "My company. It turns a day-long, 300-page RFP response into a regulator-grade proposal in minutes. I built the whole product surface — scoped retrieval, a compliance-matrix extractor, a versioned answer library, and a tamper-evident audit export — and I run the strategy, the customer development, and the raise.",
     stack: ["Next.js", "Supabase / RLS", "Vercel AI Gateway", "Azure ZDR"],
     year: "2025 →",
     status: "Building",
@@ -114,8 +121,8 @@ export const projects: Project[] = [
     title: "TCG GreenChem",
     tagline: "Strategy & finance, reporting to the CEO.",
     description:
-      "Sole strategy and finance resource for a high-growth pharmaceutical CDMO. Owned M&A evaluation, JV structuring, capital advisory and board reporting. Re-rated a low-multiple services business toward a vertical-SaaS profile, structured a $30–50M Series A process, and took SAP live across the company.",
-    stack: ["M&A", "FP&A from scratch", "JV structuring", "SAP go-live"],
+      "The sole strategy-and-finance resource for a high-growth pharmaceutical CDMO, working directly with the CEO. I owned M&A, capital strategy, contract architecture, and board reporting — and led an operational turnaround that re-rated the business from a services shop toward a vertical-SaaS profile. Built the FP&A function from scratch and drove a company-wide SAP go-live.",
+    stack: ["M&A", "Capital strategy", "FP&A from scratch", "SAP go-live"],
     year: "2024 →",
     status: "Operating",
     accent: "#ffce6b",
@@ -151,8 +158,8 @@ export const pillars: Pillar[] = [
   {
     k: "operate",
     title: "Operate",
-    body: "I run the numbers that decide whether a business lives — M&A, FP&A, deal structuring, restructuring. I've turned a low-multiple shop into a growth story and lived in the board deck.",
-    tags: ["M&A", "Capital advisory", "FP&A", "Operational restructuring"],
+    body: "I run the numbers that decide whether a business lives — M&A, FP&A, deal structuring, restructuring. I’ve sat with a CEO and turned a services shop into a growth story, and I’ve lived in the board deck.",
+    tags: ["M&A", "Capital strategy", "FP&A", "Operational restructuring"],
   },
   {
     k: "think",
@@ -183,14 +190,14 @@ export const timeline: TimelineItem[] = [
     role: "Strategic Projects & Finance Lead",
     when: "2024 →",
     where: "Princeton, NJ",
-    note: "Reporting to the CEO. 48% YoY growth, 2,000%+ EBITDA.",
+    note: "Reporting to the CEO — strategy, finance, M&A, and an operational turnaround.",
   },
   {
     org: "Patamar Capital",
     role: "Impact VC Intern",
     when: "2023",
     where: "San Francisco, CA",
-    note: "Diligence and unit economics on 10+ Southeast Asian ventures.",
+    note: "Diligence and unit economics across early-stage Southeast Asian ventures.",
   },
   {
     org: "Microsoft",

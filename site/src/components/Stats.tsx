@@ -94,7 +94,7 @@ export default function Stats() {
     <section style={{ padding: "clamp(60px, 10vh, 120px) 0" }}>
       <div className="container-x">
         <span className="eyebrow" style={{ display: "block", marginBottom: 48 }}>
-          ( 02 )&nbsp;&nbsp;Receipts
+          ( 03 )&nbsp;&nbsp;Receipts
         </span>
         <div
           ref={ref}

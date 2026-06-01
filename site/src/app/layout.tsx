@@ -27,7 +27,7 @@ const serif = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Bilal Sabry — Builder · Operator · Thinker",
   description:
-    "Founder & engineer building Krux AI. Strategy and finance operator who scaled a pharma CDMO 48% YoY. Advised a sovereign government through default. Berkeley Econ + Data Science in 2.5 years.",
+    "Founder & engineer building Krux AI. A strategy-and-finance operator and trained economist who has advised a government through a sovereign default. Berkeley Economics + Data Science in 2.5 years.",
   metadataBase: new URL("https://bilalsabry.com"),
   openGraph: {
     title: "Bilal Sabry",

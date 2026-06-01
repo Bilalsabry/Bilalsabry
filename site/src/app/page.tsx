@@ -1,6 +1,7 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Manifesto from "@/components/Manifesto";
+import About from "@/components/About";
 import Stats from "@/components/Stats";
 import Work from "@/components/Work";
 import Approach from "@/components/Approach";
@@ -13,6 +14,7 @@ export default function Home() {
       <Nav />
       <Hero />
       <Manifesto />
+      <About />
       <Stats />
       <Work />
       <Approach />

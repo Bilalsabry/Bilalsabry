@@ -8,7 +8,7 @@ export default function Timeline() {
     <section id="path" style={{ padding: "clamp(80px, 12vh, 140px) 0" }}>
       <div className="container-x">
         <span className="eyebrow" style={{ display: "block", marginBottom: 48 }}>
-          ( 05 )&nbsp;&nbsp;The path
+          ( 06 )&nbsp;&nbsp;The path
         </span>
 
         <div>

@@ -220,7 +220,7 @@ export default function Work() {
             gap: 12,
           }}
         >
-          <span className="eyebrow">( 03 )&nbsp;&nbsp;Selected work</span>
+          <span className="eyebrow">( 04 )&nbsp;&nbsp;Selected work</span>
           <span className="mono" style={{ fontSize: 12.5, color: "var(--fg-dim)" }}>
             Code, deals & policy
           </span>
