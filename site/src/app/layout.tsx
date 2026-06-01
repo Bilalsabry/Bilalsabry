@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Cursor from "@/components/Cursor";
+import Preloader from "@/components/Preloader";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -45,6 +46,7 @@ export default function RootLayout({
       className={`${inter.variable} ${mono.variable} ${serif.variable} antialiased`}
     >
       <body className="grain">
+        <Preloader />
         <Cursor />
         <SmoothScroll>{children}</SmoothScroll>
       </body>

@@ -43,9 +43,45 @@ export default function Nav() {
           height: 64,
         }}
       >
-        <a href="#top" className="mono" style={{ fontSize: 13, letterSpacing: "0.04em" }}>
-          BS<span style={{ color: "var(--accent)" }}>.</span>
-        </a>
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <a href="#top" className="mono" style={{ fontSize: 13, letterSpacing: "0.04em" }}>
+            BS<span style={{ color: "var(--accent)" }}>.</span>
+          </a>
+          <span
+            className="mono status-chip"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 7,
+              fontSize: 11,
+              letterSpacing: "0.04em",
+              color: "var(--fg-dim)",
+              border: "1px solid var(--line)",
+              borderRadius: 999,
+              padding: "4px 10px",
+            }}
+          >
+            <span
+              style={{
+                width: 6,
+                height: 6,
+                borderRadius: 999,
+                background: "var(--accent)",
+                boxShadow: "0 0 0 0 var(--accent)",
+                animation: "bs-pulse 2s infinite",
+              }}
+            />
+            Building Krux AI
+          </span>
+        </div>
+        <style>{`
+          @keyframes bs-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(110,240,200,0.55); }
+            70% { box-shadow: 0 0 0 7px rgba(110,240,200,0); }
+            100% { box-shadow: 0 0 0 0 rgba(110,240,200,0); }
+          }
+          @media (max-width: 560px){ .status-chip{ display: none !important; } }
+        `}</style>
         <nav style={{ display: "flex", gap: "clamp(14px,3vw,34px)" }}>
           {items.map((it) => (
             <a
