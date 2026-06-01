@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+/* ----------------------------------------------------------------------------
+   Design tokens — dark, cinematic, editorial.
+   Ink background, off-white text, one luminous accent reserved for signal.
+   Mono used for metadata / labels; serif for the one display statement.
+---------------------------------------------------------------------------- */
+:root {
+  --bg: #07080a;
+  --bg-soft: #0c0e12;
+  --surface: #101319;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --fg: #f2f4f7;
+  --fg-dim: #aab2bd;
+  --fg-faint: #6b7480;
+  --accent: #6ef0c8;
+  --accent-2: #8a8cff;
+  --accent-warm: #ffce6b;
+  --radius: 14px;
+  --maxw: 1240px;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-fg-dim: var(--fg-dim);
+  --color-fg-faint: var(--fg-faint);
+  --color-accent: var(--accent);
+  --color-line: var(--line);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  overflow-x: hidden;
+  letter-spacing: -0.011em;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 35%, transparent);
+  color: #fff;
+}
+
+/* Hide native cursor where the custom one runs */
+@media (hover: hover) and (pointer: fine) {
+  body.has-cursor,
+  body.has-cursor * {
+    cursor: none !important;
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------------------- utilities */
+.container-x {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 56px);
+}
+
+.mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  letter-spacing: 0.02em;
+}
+
+.eyebrow {
+  font-family: var(--font-mono), monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.serif {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+.grad-text {
+  background: linear-gradient(180deg, #ffffff 0%, #aeb7c4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Film grain overlay */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Generic scroll-reveal hidden state (JS clears it) */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .grain::after {
+    display: none;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: #1b1f27;
+  border-radius: 999px;
+  border: 2px solid var(--bg);
+}
