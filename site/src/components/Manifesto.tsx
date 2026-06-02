@@ -33,6 +33,7 @@ export default function Manifesto() {
   return (
     <section
       ref={ref}
+      id="manifesto"
       style={{ padding: "clamp(120px, 22vh, 240px) 0" }}
     >
       <div className="container-x">

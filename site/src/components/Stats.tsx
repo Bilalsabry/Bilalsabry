@@ -91,7 +91,7 @@ export default function Stats() {
   }, []);
 
   return (
-    <section style={{ padding: "clamp(60px, 10vh, 120px) 0" }}>
+    <section id="stats" style={{ padding: "clamp(60px, 10vh, 120px) 0" }}>
       <div className="container-x">
         <span className="eyebrow" style={{ display: "block", marginBottom: 48 }}>
           ( 03 )&nbsp;&nbsp;Receipts

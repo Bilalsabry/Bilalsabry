@@ -21,6 +21,8 @@ export default function SmoothScroll({
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
+    // expose for the command palette / programmatic jumps
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
 
     const bar = document.getElementById("scroll-progress");
     let raf = 0;
@@ -38,6 +40,7 @@ export default function SmoothScroll({
     return () => {
       cancelAnimationFrame(raf);
       lenis.destroy();
+      delete (window as unknown as { __lenis?: Lenis }).__lenis;
     };
   }, []);
 

@@ -4,6 +4,7 @@ import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Cursor from "@/components/Cursor";
 import Preloader from "@/components/Preloader";
+import CommandPalette from "@/components/CommandPalette";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -47,6 +48,7 @@ export default function RootLayout({
     >
       <body className="grain">
         <Preloader />
+        <CommandPalette />
         <Cursor />
         <SmoothScroll>{children}</SmoothScroll>
       </body>

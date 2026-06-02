@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import type { PlayerRef } from "@remotion/player";
 import { Showreel as ShowreelComp, REEL_FPS, REEL_DURATION } from "@/remotion/Showreel";
@@ -16,16 +16,23 @@ export default function Showreel() {
 
   useEffect(() => setMounted(true), []);
 
-  const play = () => {
+  const play = useCallback(() => {
     const p = ref.current;
     if (!p) return;
     p.seekTo(0);
     p.play();
     setStarted(true);
-  };
+  }, []);
+
+  // let the ⌘K command palette start the reel
+  useEffect(() => {
+    const handler = () => play();
+    window.addEventListener("bs-play-reel", handler);
+    return () => window.removeEventListener("bs-play-reel", handler);
+  }, [play]);
 
   return (
-    <section style={{ padding: "clamp(40px, 8vh, 90px) 0 clamp(60px, 10vh, 120px)" }}>
+    <section id="reel" style={{ padding: "clamp(40px, 8vh, 90px) 0 clamp(60px, 10vh, 120px)" }}>
       <div className="container-x">
         <div
           style={{

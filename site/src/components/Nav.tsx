@@ -103,7 +103,30 @@ export default function Nav() {
               {it.label}
             </a>
           ))}
+          <button
+            type="button"
+            aria-label="Open command palette"
+            data-cursor="go"
+            onClick={() => window.dispatchEvent(new Event("bs-open-cmdk"))}
+            className="mono cmdk-hint"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 4,
+              fontSize: 11,
+              letterSpacing: "0.04em",
+              color: "var(--fg-dim)",
+              border: "1px solid var(--line)",
+              borderRadius: 6,
+              padding: "3px 7px",
+              background: "transparent",
+              cursor: "pointer",
+            }}
+          >
+            ⌘K
+          </button>
         </nav>
+        <style>{`@media (max-width: 560px){ .cmdk-hint{ display: none !important; } }`}</style>
       </div>
     </header>
   );
