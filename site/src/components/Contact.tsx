@@ -1,6 +1,7 @@
 "use client";
 
 import { profile } from "@/lib/data";
+import Magnetic from "./Magnetic";
 
 export default function Contact() {
   return (
@@ -33,23 +34,25 @@ export default function Contact() {
           ( 07 )&nbsp;&nbsp;Let’s talk
         </span>
 
-        <a
-          href={`mailto:${profile.email}`}
-          data-cursor="email"
-          style={{
-            display: "inline-block",
-            fontSize: "clamp(34px, 8vw, 110px)",
-            fontWeight: 600,
-            letterSpacing: "-0.04em",
-            lineHeight: 1,
-            transition: "color .3s",
-          }}
-          className="grad-text"
-          onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
-          onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-        >
-          {profile.email}
-        </a>
+        <Magnetic strength={0.18} style={{ maxWidth: "100%" }}>
+          <a
+            href={`mailto:${profile.email}`}
+            data-cursor="email"
+            style={{
+              display: "inline-block",
+              fontSize: "clamp(34px, 8vw, 110px)",
+              fontWeight: 600,
+              letterSpacing: "-0.04em",
+              lineHeight: 1,
+              transition: "opacity .3s",
+            }}
+            className="grad-text"
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+          >
+            {profile.email}
+          </a>
+        </Magnetic>
 
         <div
           style={{
@@ -64,25 +67,26 @@ export default function Contact() {
             { label: "GitHub ↗", href: profile.links.github },
             { label: "Krux AI ↗", href: profile.links.krux },
           ].map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              target="_blank"
-              rel="noreferrer"
-              data-cursor="open"
-              className="mono"
-              style={{
-                fontSize: 14,
-                color: "var(--fg-dim)",
-                borderBottom: "1px solid var(--line-strong)",
-                paddingBottom: 4,
-                transition: "color .2s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--fg-dim)")}
-            >
-              {l.label}
-            </a>
+            <Magnetic key={l.label} strength={0.5}>
+              <a
+                href={l.href}
+                target="_blank"
+                rel="noreferrer"
+                data-cursor="open"
+                className="mono"
+                style={{
+                  fontSize: 14,
+                  color: "var(--fg-dim)",
+                  borderBottom: "1px solid var(--line-strong)",
+                  paddingBottom: 4,
+                  transition: "color .2s",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--fg-dim)")}
+              >
+                {l.label}
+              </a>
+            </Magnetic>
           ))}
         </div>
 

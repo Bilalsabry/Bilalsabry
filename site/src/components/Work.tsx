@@ -7,12 +7,23 @@ import { projects, type Project } from "@/lib/data";
 function Card({ p }: { p: Project }) {
   const ref = useRef<HTMLElement>(null);
 
+  const reduce = () =>
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   const onMove = (e: React.MouseEvent) => {
     const el = ref.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
-    el.style.setProperty("--mx", `${e.clientX - r.left}px`);
-    el.style.setProperty("--my", `${e.clientY - r.top}px`);
+    const mx = e.clientX - r.left;
+    const my = e.clientY - r.top;
+    el.style.setProperty("--mx", `${mx}px`);
+    el.style.setProperty("--my", `${my}px`);
+    if (reduce()) return;
+    // tilt toward the cursor, on top of the hover lift
+    const ry = ((mx - r.width / 2) / (r.width / 2)) * 4.5;
+    const rx = -((my - r.height / 2) / (r.height / 2)) * 4.5;
+    el.style.transform = `perspective(1100px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
   };
 
   const Inner = (
@@ -161,20 +172,25 @@ function Card({ p }: { p: Project }) {
     background:
       "linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.008))",
     border: "1px solid var(--line)",
-    transition: "border-color .35s, transform .35s",
+    transformStyle: "preserve-3d",
+    transition:
+      "border-color .35s, transform .25s cubic-bezier(.22,.61,.36,1), box-shadow .35s",
+    willChange: "transform",
   };
 
   const hoverOn = (e: React.MouseEvent) => {
     const el = e.currentTarget as HTMLElement;
     el.style.borderColor = `${p.accent}66`;
-    el.style.transform = "translateY(-4px)";
+    el.style.boxShadow = `0 30px 80px -40px ${p.accent}66`;
+    if (reduce()) el.style.transform = "translateY(-4px)";
     const spot = el.querySelector<HTMLElement>(".card-spot");
     if (spot) spot.style.opacity = "1";
   };
   const hoverOff = (e: React.MouseEvent) => {
     const el = e.currentTarget as HTMLElement;
     el.style.borderColor = "var(--line)";
-    el.style.transform = "translateY(0)";
+    el.style.transform = "perspective(1100px) rotateX(0) rotateY(0) translateY(0)";
+    el.style.boxShadow = "none";
     const spot = el.querySelector<HTMLElement>(".card-spot");
     if (spot) spot.style.opacity = "0";
   };

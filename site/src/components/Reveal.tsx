@@ -23,7 +23,7 @@ export default function Reveal({
     const el = ref.current;
     if (!el) return;
     el.style.transition =
-      "opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1)";
+      "opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1), filter .8s cubic-bezier(.22,.61,.36,1)";
     el.style.transitionDelay = `${delay}ms`;
 
     const io = new IntersectionObserver(
@@ -32,6 +32,7 @@ export default function Reveal({
           if (e.isIntersecting) {
             el.style.opacity = "1";
             el.style.transform = "none";
+            el.style.filter = "none";
             io.unobserve(el);
           }
         }
