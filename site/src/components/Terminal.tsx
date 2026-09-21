@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { profile, projects, path, stats } from "@/lib/data";
+import { profile, sections as dataSections } from "@/lib/data";
 import { copyText, openExternal, scrollToId, sections } from "@/lib/actions";
 import { toast } from "./Toast";
 
@@ -16,29 +16,19 @@ const BANNER = [
   "                                             |___/",
 ];
 
-const FILES: Record<string, () => string[]> = {
-  "about.txt": () => [profile.intro, "", `Location: ${profile.location}`],
-  "projects.md": () =>
-    projects.flatMap((p) => [
-      `## ${p.title}  (${p.year})`,
-      `   ${p.line}`,
-      `   tags: ${p.tags.join(", ")}`,
-      p.href ? `   ${p.href}` : "",
-      "",
-    ]),
-  "path.log": () => path.map((t) => `${t.when.padEnd(10)} ${t.org} — ${t.role}`),
-  "receipts.csv": () => [
-    "value,label",
-    ...stats.map((s) => `${s.prefix ?? ""}${s.target}${s.suffix ?? ""},${s.label}`),
-  ],
-};
+const FILES: Record<string, () => string[]> = Object.fromEntries(
+  dataSections.map((s) => [
+    `${s.id}.txt`,
+    () => s.rows.flatMap((r) => [`${r.title}`, `  ${r.note}`, r.href ? `  ${r.href}` : "", ""]),
+  ])
+);
 
 const HELP = [
   "Available commands:",
   "  help              this list",
   "  whoami            who you're talking to",
   "  ls                list files",
-  "  cat <file>        read a file (try: cat projects.md)",
+  "  cat <file>        read a file (try: cat building.txt)",
   "  go <section>      scroll to a section (" + sections.map((s) => s.id).join(", ") + ")",
   "  open <thing>      linkedin · github · krux · evidence",
   "  email             copy my email address",
@@ -61,15 +51,14 @@ function neofetch(): string[] {
     : /Android/.test(ua)
     ? "Android"
     : "Unknown";
+  const rows = dataSections.flatMap((s) => s.rows);
   return [
     `bilal@bilalsabry.com`,
     `-------------------`,
-    `Role:      ${profile.roles.join(" / ")}`,
     `Base:      ${profile.location}`,
-    `Building:  ${projects[0].title}`,
-    `Shipping:  ${projects[1].title} (${projects[1].year})`,
-    `Stack:     Rust · Next.js · Production AI · FP&A`,
-    `School:    UC Berkeley — Economics & Data Science`,
+    `Day job:   ${rows.find((r) => r.id === "tcg")?.title} — ${rows.find((r) => r.id === "tcg")?.note}`,
+    `Building:  ${rows.filter((r) => r.href || r.id === "clerqai").map((r) => r.title).join(", ")}`,
+    `School:    UC Berkeley — Economics, minor in Data Science`,
     `Visitor:   ${os} · ${window.innerWidth}×${window.innerHeight} · ${
       Intl.DateTimeFormat().resolvedOptions().timeZone
     }`,
@@ -110,10 +99,7 @@ export default function Terminal() {
           print("out", HELP);
           break;
         case "whoami":
-          print("out", [
-            `${profile.name} — ${profile.roles.join(", ")}.`,
-            `${profile.headline.lead} ${profile.headline.italic}`,
-          ]);
+          print("out", [profile.name, `${profile.intro.lead} ${profile.intro.italic}`]);
           break;
         case "ls":
           print("out", Object.keys(FILES).join("   "));
@@ -139,8 +125,8 @@ export default function Terminal() {
           const map: Record<string, string> = {
             linkedin: profile.links.linkedin,
             github: profile.links.github,
-            krux: profile.links.krux,
-            evidence: projects.find((p) => p.id === "evidence")?.href ?? "",
+            krux: dataSections.flatMap((s) => s.rows).find((r) => r.id === "krux")?.href ?? "",
+            evidence: dataSections.flatMap((s) => s.rows).find((r) => r.id === "evidence")?.href ?? "",
           };
           const url = map[arg];
           if (!url) print("err", `open: try one of ${Object.keys(map).join(", ")}`);
@@ -165,7 +151,7 @@ export default function Terminal() {
           print(
             "out",
             new Date().toLocaleString("en-US", {
-              timeZone: "America/New_York",
+              timeZone: profile.timeZone,
               dateStyle: "full",
               timeStyle: "long",
             })
@@ -291,7 +277,7 @@ export default function Terminal() {
 
   const color: Record<Line["kind"], string> = {
     in: "var(--fg)",
-    out: "var(--fg-dim)",
+    out: "var(--fg-2)",
     err: "#ff8a8a",
     sys: "var(--accent)",
   };
@@ -302,6 +288,7 @@ export default function Terminal() {
       aria-label="Terminal"
       onMouseDown={(e) => e.target === e.currentTarget && setOpen(false)}
       style={{
+        ...({ "--fg": "#f1efe9", "--fg-2": "#b3b0a8", "--fg-3": "#77756f", "--line": "rgba(241,239,233,0.1)", "--line-2": "rgba(241,239,233,0.24)", "--accent": "#6ef0c8", "--accent-soft": "rgba(110,240,200,0.1)", "--bg": "#0c0c0d", "--bg-2": "#141416" } as React.CSSProperties),
         position: "fixed",
         inset: 0,
         zIndex: 105,
@@ -323,7 +310,7 @@ export default function Terminal() {
           borderRadius: 14,
           overflow: "hidden",
           background: "rgba(8,10,13,0.94)",
-          border: "1px solid var(--line-strong)",
+          border: "1px solid var(--line-2)",
           boxShadow: "0 40px 120px -30px rgba(0,0,0,0.9), 0 0 60px -20px rgba(110,240,200,0.25)",
           animation: "bs-term-in .28s cubic-bezier(.22,1,.36,1)",
         }}
@@ -338,7 +325,7 @@ export default function Terminal() {
             padding: "10px 14px",
             borderBottom: "1px solid var(--line)",
             fontSize: 11.5,
-            color: "var(--fg-faint)",
+            color: "var(--fg-3)",
             letterSpacing: "0.06em",
           }}
         >

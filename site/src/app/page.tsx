@@ -1,21 +1,20 @@
-import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
-import Proof from "@/components/Proof";
-import Work from "@/components/Work";
-import About from "@/components/About";
-import Contact from "@/components/Contact";
+import TopBar from "@/components/TopBar";
+import Intro from "@/components/Intro";
+import Rows from "@/components/Rows";
+import Footer from "@/components/Footer";
+import { sections } from "@/lib/data";
 
 export default function Home() {
   return (
     <>
-      <Nav />
+      <TopBar />
       <main>
-        <Hero />
-        <Proof />
-        <Work />
-        <About />
+        <Intro />
+        {sections.map((s, i) => (
+          <Rows key={s.id} section={s} index={i} />
+        ))}
       </main>
-      <Contact />
+      <Footer />
     </>
   );
 }

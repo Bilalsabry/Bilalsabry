@@ -3,7 +3,7 @@
 // so both surfaces stay in sync. Pure data + tiny helpers; no React.
 // ---------------------------------------------------------------------------
 
-import { profile, projects } from "./data";
+import { profile, sections as dataSections } from "./data";
 
 export type Action = {
   id: string;
@@ -16,10 +16,9 @@ export type Action = {
 
 export const sections = [
   { id: "top", label: "Top" },
-  { id: "work", label: "Work" },
-  { id: "about", label: "About" },
+  ...dataSections.map((s) => ({ id: s.id, label: s.label })),
   { id: "contact", label: "Contact" },
-] as const;
+];
 
 export function scrollToId(id: string) {
   const el = document.getElementById(id);
@@ -105,15 +104,16 @@ export function buildActions(onToast: (m: string) => void): Action[] {
     },
   ];
 
-  const work: Action[] = projects
-    .filter((p) => p.href)
-    .map((p) => ({
-      id: `open-${p.id}`,
-      label: `Open ${p.title}`,
+  const work: Action[] = dataSections
+    .flatMap((s) => s.rows)
+    .filter((r) => r.href)
+    .map((r) => ({
+      id: `open-${r.id}`,
+      label: `Open ${r.title}`,
       hint: "↗",
-      keywords: `${p.line} ${p.tags.join(" ")}`,
-      group: "Work",
-      run: () => openExternal(p.href!),
+      keywords: r.note,
+      group: "Work" as const,
+      run: () => openExternal(r.href!),
     }));
 
   const fun: Action[] = [
@@ -124,14 +124,6 @@ export function buildActions(onToast: (m: string) => void): Action[] {
       keywords: "console shell cli hacker",
       group: "Fun",
       run: () => emit("bs:terminal", { open: true }),
-    },
-    {
-      id: "print",
-      label: "Print / save as PDF",
-      hint: "⌘P",
-      keywords: "resume cv",
-      group: "Fun",
-      run: () => window.print(),
     },
   ];
 

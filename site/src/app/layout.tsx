@@ -27,14 +27,14 @@ const serif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Bilal Sabry — Founder & Engineer",
+  title: "Bilal Sabry",
   description:
-    "I build companies, and the software that runs them. Founder of Krux AI. Previously strategy & finance for a pharma CDMO and policy research for Sri Lanka’s Minister of Finance. UC Berkeley, Economics & Data Science.",
+    "Finance and strategy by day. I build software on the side. Strategic Projects & Finance Lead at TCG GreenChem; building Krux and ClerqAI. UC Berkeley Economics.",
   metadataBase: new URL("https://bilalsabry.com"),
   alternates: { canonical: "/" },
   openGraph: {
     title: "Bilal Sabry",
-    description: "I build companies, and the software that runs them.",
+    description: "Finance and strategy by day. I build software on the side.",
     type: "website",
     url: "https://bilalsabry.com",
     siteName: "Bilal Sabry",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Bilal Sabry",
-    description: "I build companies, and the software that runs them.",
+    description: "Finance and strategy by day. I build software on the side.",
   },
   robots: { index: true, follow: true },
 };
@@ -54,10 +54,10 @@ const jsonLd = {
   name: profile.name,
   url: "https://bilalsabry.com",
   email: `mailto:${profile.email}`,
-  jobTitle: "Founder & Engineer",
-  worksFor: { "@type": "Organization", name: "Krux AI", url: profile.links.krux },
+  jobTitle: "Strategic Projects & Finance Lead",
+  worksFor: { "@type": "Organization", name: "TCG GreenChem" },
   alumniOf: { "@type": "CollegeOrUniversity", name: "UC Berkeley" },
-  address: { "@type": "PostalAddress", addressLocality: "Princeton", addressRegion: "NJ" },
+  address: { "@type": "PostalAddress", addressLocality: "New York", addressRegion: "NY" },
   sameAs: [profile.links.linkedin, profile.links.github],
 };
 

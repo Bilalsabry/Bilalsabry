@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-const TZ = "America/New_York";
+import { profile } from "@/lib/data";
+
+const TZ = profile.timeZone;
 
 /**
  * Live clock in Bilal's timezone, with the UTC offset so a visitor anywhere
@@ -41,7 +43,7 @@ export default function LocalTime({ style }: { style?: React.CSSProperties }) {
       className="mono"
       suppressHydrationWarning
       style={{ fontVariantNumeric: "tabular-nums", ...style }}
-      title={`Local time in Princeton, NJ (${TZ})`}
+      title={`Local time in ${profile.location}`}
     >
       {now ? (
         <>

@@ -1,6 +1,6 @@
 # bilalsabry.com
 
-One clean page. **I build companies, and the software that runs them.**
+One quiet page. Name, one line, three short lists, contact.
 
 ## Stack
 
@@ -18,9 +18,8 @@ npm run build    # production build
 
 ## Editing content
 
-**Everything is in [`src/lib/data.ts`](src/lib/data.ts)** — headline, intro,
-the four numbers, three projects, and the career path. No component edits
-needed to change copy.
+**Everything is in [`src/lib/data.ts`](src/lib/data.ts)** — the intro line and
+the Building / Now / Education lists. Add a row, change a note, done.
 
 ## Structure
 
@@ -28,24 +27,24 @@ needed to change copy.
 src/
   app/
     layout.tsx        fonts, metadata, JSON-LD
-    page.tsx          Nav · Hero · Proof · Work · About · Contact
+    page.tsx          TopBar · Intro · Rows (per section) · Footer
     globals.css       tokens (light by default, dark via prefers-color-scheme)
     sitemap.ts · robots.ts · manifest.ts · opengraph-image.tsx · icon.tsx
   lib/
     data.ts           ← all content
     actions.ts        shared actions for the palette + terminal
   components/
-    Hero / Proof / Work / About / Contact / Nav
+    TopBar / Intro / Rows / Footer
     CommandPalette    ⌘K / Ctrl+K / "/" — fuzzy search, also the mobile menu
     Terminal          press ` — help, whoami, ls, cat, go, open, neofetch…
-    Rotator · LocalTime · Magnetic · Reveal · Toast
+    LocalTime · Magnetic · Reveal · Toast
 ```
 
 ## Features
 
 - Light and dark, following the system setting.
 - ⌘K command palette and a hidden terminal, both driven by `data.ts`.
-- Live Princeton clock, count-up numbers, click-to-copy email.
+- Live New York clock, click-to-copy email.
 - `sitemap.xml`, `robots.txt`, web manifest, Open Graph card, JSON-LD Person.
 - Respects `prefers-reduced-motion`. Clean print stylesheet.
 

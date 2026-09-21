@@ -45,6 +45,7 @@ export default function Toast() {
       aria-live="polite"
       className="mono"
       style={{
+        ...({ "--fg": "#f1efe9", "--fg-2": "#b3b0a8", "--fg-3": "#77756f", "--line": "rgba(241,239,233,0.1)", "--line-2": "rgba(241,239,233,0.24)", "--accent": "#6ef0c8", "--accent-soft": "rgba(110,240,200,0.1)", "--bg": "#0c0c0d", "--bg-2": "#141416" } as React.CSSProperties),
         position: "fixed",
         left: "50%",
         bottom: 28,
@@ -58,7 +59,7 @@ export default function Toast() {
         letterSpacing: "0.04em",
         color: "var(--fg)",
         background: "rgba(16,19,25,0.85)",
-        border: "1px solid var(--line-strong)",
+        border: "1px solid var(--line-2)",
         backdropFilter: "blur(12px)",
         boxShadow: "0 20px 60px -20px rgba(0,0,0,0.8)",
         pointerEvents: "none",

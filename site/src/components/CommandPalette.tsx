@@ -142,6 +142,7 @@ export default function CommandPalette() {
       aria-label="Command palette"
       onMouseDown={(e) => e.target === e.currentTarget && close()}
       style={{
+        ...({ "--fg": "#f1efe9", "--fg-2": "#b3b0a8", "--fg-3": "#77756f", "--line": "rgba(241,239,233,0.1)", "--line-2": "rgba(241,239,233,0.24)", "--accent": "#6ef0c8", "--accent-soft": "rgba(110,240,200,0.1)", "--bg": "#0c0c0d", "--bg-2": "#141416" } as React.CSSProperties),
         position: "fixed",
         inset: 0,
         zIndex: 110,
@@ -164,7 +165,7 @@ export default function CommandPalette() {
           borderRadius: 16,
           overflow: "hidden",
           background: "rgba(14,17,22,0.92)",
-          border: "1px solid var(--line-strong)",
+          border: "1px solid var(--line-2)",
           boxShadow:
             "0 40px 120px -30px rgba(0,0,0,0.9), 0 0 0 1px rgba(110,240,200,0.06), inset 0 1px 0 rgba(255,255,255,0.06)",
           animation: "bs-pop .22s cubic-bezier(.22,1,.36,1)",
@@ -206,7 +207,7 @@ export default function CommandPalette() {
             className="mono"
             style={{
               fontSize: 10.5,
-              color: "var(--fg-faint)",
+              color: "var(--fg-3)",
               border: "1px solid var(--line)",
               borderRadius: 6,
               padding: "3px 6px",
@@ -228,7 +229,7 @@ export default function CommandPalette() {
               style={{
                 padding: "28px 14px",
                 textAlign: "center",
-                color: "var(--fg-faint)",
+                color: "var(--fg-3)",
                 fontSize: 13,
               }}
             >
@@ -247,7 +248,7 @@ export default function CommandPalette() {
                       fontSize: 10.5,
                       letterSpacing: "0.18em",
                       textTransform: "uppercase",
-                      color: "var(--fg-faint)",
+                      color: "var(--fg-3)",
                     }}
                   >
                     {a.group}
@@ -272,7 +273,7 @@ export default function CommandPalette() {
                     textAlign: "left",
                     fontFamily: "inherit",
                     fontSize: 14.5,
-                    color: active ? "var(--fg)" : "var(--fg-dim)",
+                    color: active ? "var(--fg)" : "var(--fg-2)",
                     background: active
                       ? "linear-gradient(90deg, rgba(110,240,200,0.14), rgba(138,140,255,0.08))"
                       : "transparent",
@@ -289,7 +290,7 @@ export default function CommandPalette() {
                       className="mono"
                       style={{
                         fontSize: 11.5,
-                        color: active ? "var(--accent)" : "var(--fg-faint)",
+                        color: active ? "var(--accent)" : "var(--fg-3)",
                         whiteSpace: "nowrap",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
@@ -314,7 +315,7 @@ export default function CommandPalette() {
             padding: "10px 18px",
             borderTop: "1px solid var(--line)",
             fontSize: 11,
-            color: "var(--fg-faint)",
+            color: "var(--fg-3)",
             letterSpacing: "0.04em",
           }}
         >
