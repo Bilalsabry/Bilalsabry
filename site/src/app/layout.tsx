@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
-import SmoothScroll from "@/components/SmoothScroll";
-import Cursor from "@/components/Cursor";
-import Preloader from "@/components/Preloader";
 import CommandPalette from "@/components/CommandPalette";
 import Terminal from "@/components/Terminal";
 import Toast from "@/components/Toast";
@@ -30,14 +27,14 @@ const serif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Bilal Sabry — Builder · Operator · Thinker",
+  title: "Bilal Sabry — Founder & Engineer",
   description:
-    "Founder & engineer building Krux AI. A strategy-and-finance operator and trained economist who has advised a government through a sovereign default. Berkeley Economics + Data Science in 2.5 years.",
+    "I build companies, and the software that runs them. Founder of Krux AI. Previously strategy & finance for a pharma CDMO and policy research for Sri Lanka’s Minister of Finance. UC Berkeley, Economics & Data Science.",
   metadataBase: new URL("https://bilalsabry.com"),
   alternates: { canonical: "/" },
   openGraph: {
     title: "Bilal Sabry",
-    description: "Builder · Operator · Thinker",
+    description: "I build companies, and the software that runs them.",
     type: "website",
     url: "https://bilalsabry.com",
     siteName: "Bilal Sabry",
@@ -45,7 +42,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Bilal Sabry",
-    description: "Builder · Operator · Thinker",
+    description: "I build companies, and the software that runs them.",
   },
   robots: { index: true, follow: true },
 };
@@ -72,14 +69,12 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${mono.variable} ${serif.variable} antialiased`}
     >
-      <body className="grain">
+      <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <Preloader />
-        <Cursor />
-        <SmoothScroll>{children}</SmoothScroll>
+        {children}
         <CommandPalette />
         <Terminal />
         <Toast />

@@ -16,11 +16,8 @@ export type Action = {
 
 export const sections = [
   { id: "top", label: "Top" },
-  { id: "about", label: "About" },
   { id: "work", label: "Work" },
-  { id: "approach", label: "Approach" },
-  { id: "now", label: "Now" },
-  { id: "path", label: "Path" },
+  { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
 ] as const;
 
@@ -114,7 +111,7 @@ export function buildActions(onToast: (m: string) => void): Action[] {
       id: `open-${p.id}`,
       label: `Open ${p.title}`,
       hint: "↗",
-      keywords: `${p.tagline} ${p.stack.join(" ")}`,
+      keywords: `${p.line} ${p.tags.join(" ")}`,
       group: "Work",
       run: () => openExternal(p.href!),
     }));

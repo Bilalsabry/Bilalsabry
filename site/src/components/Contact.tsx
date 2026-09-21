@@ -5,143 +5,100 @@ import { profile } from "@/lib/data";
 import { copyText } from "@/lib/actions";
 import { toast } from "./Toast";
 import Magnetic from "./Magnetic";
-import LocalTime from "./LocalTime";
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
 
-  // Click copies the address (a mailto on a machine with no mail client is a
-  // dead end); ⌘/Ctrl-click or middle-click still opens the mail client.
   const onEmailClick = async (e: React.MouseEvent) => {
-    if (e.metaKey || e.ctrlKey) return;
+    if (e.metaKey || e.ctrlKey) return; // ⌘-click opens the mail client
     e.preventDefault();
     const ok = await copyText(profile.email);
     if (ok) {
       setCopied(true);
-      toast("Email copied to clipboard");
+      toast("Email copied");
       setTimeout(() => setCopied(false), 1600);
     } else {
       window.location.href = `mailto:${profile.email}`;
     }
   };
 
+  const links = [
+    { label: "LinkedIn", href: profile.links.linkedin },
+    { label: "GitHub", href: profile.links.github },
+    { label: "Krux AI", href: profile.links.krux },
+  ];
+
   return (
-    <footer
-      id="contact"
-      style={{
-        position: "relative",
-        padding: "clamp(100px, 18vh, 200px) 0 56px",
-        borderTop: "1px solid var(--line)",
-        overflow: "hidden",
-      }}
-    >
-      {/* faint glow */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          bottom: "-30%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "80vw",
-          height: "60vh",
-          background:
-            "radial-gradient(50% 50% at 50% 50%, rgba(110,240,200,0.10), transparent 70%)",
-          pointerEvents: "none",
-        }}
-      />
-      <div className="container-x" style={{ position: "relative" }}>
-        <span className="eyebrow" style={{ display: "block", marginBottom: 28 }}>
-          ( 08 )&nbsp;&nbsp;Let’s talk
+    <footer id="contact" style={{ padding: "clamp(72px, 14vh, 160px) 0 40px" }}>
+      <div className="wrap">
+        <span className="label" style={{ display: "block", marginBottom: 20 }}>
+          Say hello
         </span>
-
-        <a
-          href={`mailto:${profile.email}`}
-          data-cursor={copied ? "copied ✓" : "copy"}
-          onClick={onEmailClick}
-          title="Click to copy · ⌘-click to open mail"
+        <h2
           style={{
-            display: "inline-block",
-            fontSize: "clamp(34px, 8vw, 110px)",
+            margin: 0,
+            fontSize: "clamp(30px, 5.5vw, 68px)",
             fontWeight: 600,
-            letterSpacing: "-0.04em",
-            lineHeight: 1,
-            transition: "color .3s",
-          }}
-          className="grad-text"
-          onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
-          onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-        >
-          {profile.email}
-        </a>
-        <div
-          className="mono"
-          style={{
-            marginTop: 18,
-            fontSize: 12.5,
-            color: "var(--fg-faint)",
-            letterSpacing: "0.04em",
+            letterSpacing: "-0.035em",
+            lineHeight: 1.05,
+            maxWidth: 820,
+            textWrap: "balance",
           }}
         >
-          Click to copy · It’s <LocalTime style={{ color: "var(--fg-dim)" }} /> in
-          Princeton right now.
-        </div>
+          Interesting problem?{" "}
+          <span className="serif" style={{ color: "var(--accent)" }}>
+            I’d like to hear it.
+          </span>
+        </h2>
 
         <div
           style={{
+            marginTop: 32,
             display: "flex",
             flexWrap: "wrap",
-            gap: "clamp(14px, 3vw, 32px)",
-            marginTop: 56,
+            alignItems: "center",
+            gap: 12,
           }}
         >
-          {[
-            { label: "LinkedIn ↗", href: profile.links.linkedin },
-            { label: "GitHub ↗", href: profile.links.github },
-            { label: "Krux AI ↗", href: profile.links.krux },
-          ].map((l) => (
-            <Magnetic key={l.label} strength={0.3}>
-            <a
-              href={l.href}
-              target="_blank"
-              rel="noreferrer"
-              data-cursor="open"
-              className="mono"
-              style={{
-                fontSize: 14,
-                color: "var(--fg-dim)",
-                borderBottom: "1px solid var(--line-strong)",
-                paddingBottom: 4,
-                transition: "color .2s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--fg-dim)")}
-            >
-              {l.label}
-            </a>
+          <a
+            href={`mailto:${profile.email}`}
+            onClick={onEmailClick}
+            title="Click to copy · ⌘-click to open mail"
+            className="btn btn-primary"
+            style={{ fontSize: 15 }}
+          >
+            {profile.email}
+            <span className="mono" style={{ fontSize: 11, opacity: 0.7 }}>
+              {copied ? "copied ✓" : "copy"}
+            </span>
+          </a>
+          {links.map((l) => (
+            <Magnetic key={l.label} strength={0.25}>
+              <a href={l.href} target="_blank" rel="noreferrer" className="btn">
+                {l.label} <span aria-hidden style={{ color: "var(--fg-3)" }}>↗</span>
+              </a>
             </Magnetic>
           ))}
         </div>
 
         <div
-          className="mono"
+          className="mono no-print"
           style={{
+            marginTop: "clamp(56px, 10vh, 100px)",
+            paddingTop: 20,
+            borderTop: "1px solid var(--line)",
             display: "flex",
-            justifyContent: "space-between",
             flexWrap: "wrap",
+            justifyContent: "space-between",
             gap: 10,
-            marginTop: "clamp(64px, 12vh, 130px)",
-            fontSize: 11.5,
-            color: "var(--fg-faint)",
-            letterSpacing: "0.06em",
+            fontSize: 12,
+            color: "var(--fg-3)",
           }}
         >
-          <span>© {new Date().getFullYear()} Bilal Sabry</span>
-          <span>{profile.location}</span>
+          <span>© {new Date().getFullYear()} {profile.name}</span>
           <span>
-            Press <kbd style={{ fontFamily: "inherit", color: "var(--fg-dim)" }}>⌘K</kbd>{" "}
-            to search · <kbd style={{ fontFamily: "inherit", color: "var(--fg-dim)" }}>`</kbd>{" "}
-            for a surprise
+            <kbd style={{ fontFamily: "inherit" }}>⌘K</kbd> to search ·{" "}
+            <kbd style={{ fontFamily: "inherit" }}>`</kbd> for the terminal
           </span>
         </div>
       </div>

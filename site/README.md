@@ -1,16 +1,12 @@
-# bilalsabry.com — personal site
+# bilalsabry.com
 
-A dark, cinematic one-page personal site. **Builder × Operator × Thinker.**
-
-Mock / v1 — content lives in one file and is easy to edit.
+One clean page. **I build companies, and the software that runs them.**
 
 ## Stack
 
 - **Next.js 16** (App Router) + **React 19** + **TypeScript**
-- **Tailwind v4** for tokens/utilities; most styling is inline + `globals.css`
-- **Motion** (Framer Motion) — scroll-linked illumination, counters
-- **Lenis** — smooth scrolling
-- **Raw WebGL** — the hero aurora shader (no heavy 3D dependency)
+- **Tailwind v4** for tokens; most styling is inline + `globals.css`
+- No animation or scroll libraries. Everything is CSS + a few small hooks.
 
 ## Run
 
@@ -22,61 +18,38 @@ npm run build    # production build
 
 ## Editing content
 
-**Everything you'd want to change is in [`src/lib/data.ts`](src/lib/data.ts)** —
-name, rotating roles, the thesis line, the manifesto, the stat counters,
-projects, the Build/Operate/Think pillars, and the timeline. No component
-edits needed to update copy.
+**Everything is in [`src/lib/data.ts`](src/lib/data.ts)** — headline, intro,
+the four numbers, three projects, and the career path. No component edits
+needed to change copy.
 
 ## Structure
 
 ```
 src/
   app/
-    layout.tsx          fonts (Inter / JetBrains Mono / Instrument Serif), metadata
-    page.tsx            section composition
-    globals.css         design tokens + utilities
-  lib/data.ts           ← all content
+    layout.tsx        fonts, metadata, JSON-LD
+    page.tsx          Nav · Hero · Proof · Work · About · Contact
+    globals.css       tokens (light by default, dark via prefers-color-scheme)
+    sitemap.ts · robots.ts · manifest.ts · opengraph-image.tsx · icon.tsx
+  lib/
+    data.ts           ← all content
+    actions.ts        shared actions for the palette + terminal
   components/
-    ShaderBackground    WebGL aurora hero (mouse-reactive, reduced-motion aware)
-    Cursor              custom dot + lagging ring with hover labels
-    SmoothScroll        Lenis + top progress bar
-    Scramble            decode/scramble role cycler
-    Reveal              IntersectionObserver scroll-in
-    Hero / Manifesto / Stats / Work / Approach / Timeline / Contact
+    Hero / Proof / Work / About / Contact / Nav
+    CommandPalette    ⌘K / Ctrl+K / "/" — fuzzy search, also the mobile menu
+    Terminal          press ` — help, whoami, ls, cat, go, open, neofetch…
+    Rotator · LocalTime · Magnetic · Reveal · Toast
 ```
 
 ## Features
 
-- **⌘K / Ctrl+K command palette** (also `/`) — fuzzy search over sections, links,
-  projects; copy email; open the terminal. Doubles as the mobile menu.
-- **Hidden terminal** — press `` ` ``. `help`, `whoami`, `ls`, `cat projects.md`,
-  `go work`, `open github`, `neofetch`… All output is generated from `data.ts`.
-- **Now section** — what I'm focused on this season, with a live Princeton clock.
-- **Click-to-copy email** with a toast (⌘-click still opens the mail client).
-- **Magnetic nav + links**, active-section highlighting, keyboard focus rings.
-- **Print stylesheet** — ⌘P gives a clean light one-pager.
-- **SEO for the domain** — `sitemap.xml`, `robots.txt`, web manifest, canonical
-  URL, Open Graph/Twitter cards, and JSON-LD `Person` structured data.
+- Light and dark, following the system setting.
+- ⌘K command palette and a hidden terminal, both driven by `data.ts`.
+- Live Princeton clock, count-up numbers, click-to-copy email.
+- `sitemap.xml`, `robots.txt`, web manifest, Open Graph card, JSON-LD Person.
+- Respects `prefers-reduced-motion`. Clean print stylesheet.
 
-## Deploying to bilalsabry.com (Vercel)
+## Deploying (Vercel)
 
-1. Import the repo in Vercel. If the site lives in `/site`, set **Root Directory**
-   to `site`; if this folder is the repo root, leave it blank.
-2. In the project's **Domains** tab add `bilalsabry.com` and `www.bilalsabry.com`.
-3. At your registrar, point DNS at Vercel:
-   - `A` record for `@` → `76.76.21.21`
-   - `CNAME` for `www` → `cname.vercel-dns.com`
-4. Vercel issues the TLS certificate automatically once DNS propagates.
-
-## Notes
-
-- Respects `prefers-reduced-motion` (shader, scramble, counters, reveals all degrade gracefully).
-- Custom cursor only activates on fine-pointer devices; native cursor elsewhere.
-- WebGL falls back to a static CSS gradient if unavailable.
-
-## Ideas for v2
-
-- Replace the email / links / handles with finalized ones; swap in a real domain.
-- Per-project detail pages or a sticky "anatomy of a project" scroll teardown.
-- A Remotion-rendered intro / OG video generated from the same React components.
-- Sound-on-hover micro-interactions (toggleable).
+Root Directory is `site`. Production deploys from `main`. Domain
+`bilalsabry.com` is attached in the project's Domains tab.

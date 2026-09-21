@@ -1,14 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  profile,
-  projects,
-  timeline,
-  pillars,
-  stats,
-  facts,
-} from "@/lib/data";
+import { profile, projects, path, stats } from "@/lib/data";
 import { copyText, openExternal, scrollToId, sections } from "@/lib/actions";
 import { toast } from "./Toast";
 
@@ -24,24 +17,20 @@ const BANNER = [
 ];
 
 const FILES: Record<string, () => string[]> = {
-  "about.txt": () => [profile.thesis, "", `Location: ${profile.location}`],
+  "about.txt": () => [profile.intro, "", `Location: ${profile.location}`],
   "projects.md": () =>
     projects.flatMap((p) => [
-      `## ${p.title}  (${p.year} · ${p.status})`,
-      `   ${p.tagline}`,
-      `   stack: ${p.stack.join(", ")}`,
+      `## ${p.title}  (${p.year})`,
+      `   ${p.line}`,
+      `   tags: ${p.tags.join(", ")}`,
       p.href ? `   ${p.href}` : "",
       "",
     ]),
-  "path.log": () =>
-    timeline.map((t) => `${t.when.padEnd(10)} ${t.org} — ${t.role} (${t.where})`),
+  "path.log": () => path.map((t) => `${t.when.padEnd(10)} ${t.org} — ${t.role}`),
   "receipts.csv": () => [
     "value,label",
-    ...stats.map((s) => `${s.value},${s.label}`),
+    ...stats.map((s) => `${s.prefix ?? ""}${s.target}${s.suffix ?? ""},${s.label}`),
   ],
-  "approach.txt": () =>
-    pillars.flatMap((p) => [`[${p.title.toUpperCase()}]`, p.body, ""]),
-  "facts.txt": () => facts,
 };
 
 const HELP = [
@@ -77,8 +66,8 @@ function neofetch(): string[] {
     `-------------------`,
     `Role:      ${profile.roles.join(" / ")}`,
     `Base:      ${profile.location}`,
-    `Building:  ${projects[0].title} — ${projects[0].tagline}`,
-    `Shipping:  ${projects[1].title} (${projects[1].status})`,
+    `Building:  ${projects[0].title}`,
+    `Shipping:  ${projects[1].title} (${projects[1].year})`,
     `Stack:     Rust · Next.js · Production AI · FP&A`,
     `School:    UC Berkeley — Economics & Data Science`,
     `Visitor:   ${os} · ${window.innerWidth}×${window.innerHeight} · ${
@@ -122,8 +111,8 @@ export default function Terminal() {
           break;
         case "whoami":
           print("out", [
-            `${profile.name} — ${profile.roles.join(", ").toLowerCase()}.`,
-            profile.thesis,
+            `${profile.name} — ${profile.roles.join(", ")}.`,
+            `${profile.headline.lead} ${profile.headline.italic}`,
           ]);
           break;
         case "ls":

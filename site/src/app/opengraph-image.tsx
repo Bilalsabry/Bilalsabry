@@ -2,9 +2,8 @@ import { ImageResponse } from "next/og";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Bilal Sabry — Builder, Operator, Thinker";
+export const alt = "Bilal Sabry — I build companies, and the software that runs them.";
 
-// Dynamic social card so the link looks designed when shared.
 export default function OpengraphImage() {
   return new ImageResponse(
     (
@@ -16,10 +15,10 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px 80px",
-          background: "#07080a",
+          background: "#faf8f3",
           backgroundImage:
-            "radial-gradient(60% 80% at 78% 0%, rgba(110,240,200,0.22) 0%, transparent 55%), radial-gradient(60% 80% at 10% 100%, rgba(138,140,255,0.20) 0%, transparent 55%)",
-          color: "#f2f4f7",
+            "radial-gradient(55% 70% at 88% 0%, rgba(12,107,82,0.16) 0%, transparent 60%)",
+          color: "#121212",
           fontFamily: "sans-serif",
         }}
       >
@@ -28,42 +27,35 @@ export default function OpengraphImage() {
             display: "flex",
             justifyContent: "space-between",
             fontSize: 24,
-            letterSpacing: 4,
-            color: "#6ef0c8",
+            letterSpacing: 3,
             textTransform: "uppercase",
+            color: "#8a8883",
           }}
         >
-          <span>Bilal Sabry</span>
-          <span style={{ color: "#6b7480" }}>Princeton, NJ</span>
+          <span style={{ color: "#121212" }}>Bilal Sabry</span>
+          <span>Princeton, NJ</span>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div
-            style={{
-              fontSize: 132,
-              fontWeight: 700,
-              letterSpacing: -5,
-              lineHeight: 1,
-            }}
-          >
-            Builder.
+        <div style={{ display: "flex", flexDirection: "column", maxWidth: 1000 }}>
+          <div style={{ fontSize: 92, fontWeight: 700, letterSpacing: -4, lineHeight: 1.02 }}>
+            I build companies,
           </div>
           <div
             style={{
-              fontSize: 132,
-              fontWeight: 700,
-              letterSpacing: -5,
-              lineHeight: 1,
-              color: "#aeb7c4",
+              fontSize: 92,
+              fontStyle: "italic",
+              fontFamily: "serif",
+              letterSpacing: -3,
+              lineHeight: 1.02,
+              color: "#0c6b52",
             }}
           >
-            Operator. Thinker.
+            and the software that runs them.
           </div>
         </div>
 
-        <div style={{ display: "flex", fontSize: 30, color: "#aab2bd" }}>
-          Founder &amp; engineer building Krux AI · advised a government through a
-          sovereign default · Berkeley ’24
+        <div style={{ display: "flex", fontSize: 28, color: "#4d4c48" }}>
+          Founder, Krux AI · advised Sri Lanka’s Ministry of Finance through a sovereign default · UC Berkeley
         </div>
       </div>
     ),

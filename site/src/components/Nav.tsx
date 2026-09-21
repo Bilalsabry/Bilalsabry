@@ -3,24 +3,21 @@
 import { useEffect, useState } from "react";
 import Magnetic from "./Magnetic";
 import { openPalette } from "./CommandPalette";
+import { profile } from "@/lib/data";
 
 const items = [
-  { label: "About", href: "#about" },
   { label: "Work", href: "#work" },
-  { label: "Approach", href: "#approach" },
-  { label: "Now", href: "#now" },
-  { label: "Path", href: "#path" },
+  { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
 
 export default function Nav() {
   const [solid, setSolid] = useState(false);
-  const [active, setActive] = useState<string>("");
+  const [active, setActive] = useState("");
   const [isMac, setIsMac] = useState(true);
 
   useEffect(() => {
-    const onScroll = () => setSolid(window.scrollY > 40);
-    // initial read happens in the next frame so it's not a sync setState in the effect body
+    const onScroll = () => setSolid(window.scrollY > 24);
     const raf = requestAnimationFrame(() => {
       setIsMac(/Mac|iPhone|iPad/.test(navigator.platform));
       onScroll();
@@ -32,22 +29,19 @@ export default function Nav() {
     };
   }, []);
 
-  // Highlight the nav item for the section currently in view.
   useEffect(() => {
     const els = items
       .map((it) => document.querySelector<HTMLElement>(it.href))
       .filter((x): x is HTMLElement => !!x);
-    if (els.length === 0) return;
     const io = new IntersectionObserver(
       (entries) => {
-        // pick the most visible intersecting section
         const best = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (best) setActive(`#${best.target.id}`);
         else if (window.scrollY < 200) setActive("");
       },
-      { rootMargin: "-35% 0px -55% 0px", threshold: [0, 0.2, 0.5] }
+      { rootMargin: "-40% 0px -50% 0px", threshold: [0, 0.25, 0.5] }
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
@@ -56,19 +50,17 @@ export default function Nav() {
   return (
     <header
       style={{
-        position: "fixed",
+        position: "sticky",
         top: 0,
-        left: 0,
-        right: 0,
         zIndex: 50,
-        transition: "background .3s ease, border-color .3s ease, backdrop-filter .3s",
-        background: solid ? "rgba(7,8,10,0.6)" : "transparent",
-        backdropFilter: solid ? "blur(12px)" : "none",
-        borderBottom: solid ? "1px solid var(--line)" : "1px solid transparent",
+        background: solid ? "color-mix(in oklab, var(--bg) 82%, transparent)" : "transparent",
+        backdropFilter: solid ? "blur(14px)" : "none",
+        borderBottom: `1px solid ${solid ? "var(--line)" : "transparent"}`,
+        transition: "background .3s, border-color .3s",
       }}
     >
       <div
-        className="container-x"
+        className="wrap"
         style={{
           display: "flex",
           alignItems: "center",
@@ -77,122 +69,56 @@ export default function Nav() {
           gap: 16,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <Magnetic>
-            <a href="#top" className="mono" style={{ fontSize: 13, letterSpacing: "0.04em" }}>
-              BS<span style={{ color: "var(--accent)" }}>.</span>
-            </a>
-          </Magnetic>
-          <span
-            className="mono status-chip"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 7,
-              fontSize: 11,
-              letterSpacing: "0.04em",
-              color: "var(--fg-dim)",
-              border: "1px solid var(--line)",
-              borderRadius: 999,
-              padding: "4px 10px",
-            }}
-          >
-            <span
-              style={{
-                width: 6,
-                height: 6,
-                borderRadius: 999,
-                background: "var(--accent)",
-                boxShadow: "0 0 0 0 var(--accent)",
-                animation: "bs-pulse 2s infinite",
-              }}
-            />
-            Building Krux AI
-          </span>
-        </div>
-        <style>{`
-          @keyframes bs-pulse {
-            0% { box-shadow: 0 0 0 0 rgba(110,240,200,0.55); }
-            70% { box-shadow: 0 0 0 7px rgba(110,240,200,0); }
-            100% { box-shadow: 0 0 0 0 rgba(110,240,200,0); }
-          }
-          @media (max-width: 720px){ .status-chip{ display: none !important; } }
-          @media (max-width: 560px){ .nav-links{ display: none !important; } }
-          .nav-link[data-active="true"]{ color: var(--fg) !important; }
-          .nav-link[data-active="true"]::after{ transform: scaleX(1); }
-          .nav-link::after{
-            content:""; position:absolute; left:0; right:0; bottom:-6px; height:1px;
-            background: var(--accent); transform: scaleX(0); transform-origin: 0 50%;
-            transition: transform .3s cubic-bezier(.22,1,.36,1);
-          }
-          .nav-link:hover::after{ transform: scaleX(1); }
-          .kbd-btn:hover{ border-color: var(--line-strong) !important; color: var(--fg) !important; }
-          .kbd-mobile{ display: none; }
-          @media (max-width: 560px){
-            .kbd-desktop, .kbd-btn kbd{ display: none !important; }
-            .kbd-mobile{ display: inline; }
-          }
-        `}</style>
+        <Magnetic strength={0.2}>
+          <a href="#top" style={{ fontWeight: 600, fontSize: 15, letterSpacing: "-0.01em" }}>
+            {profile.name}
+          </a>
+        </Magnetic>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "clamp(14px, 3vw, 34px)" }}>
-          <nav className="nav-links" style={{ display: "flex", gap: "clamp(14px,3vw,34px)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "clamp(16px, 3vw, 32px)" }}>
+          <nav className="nav-links" style={{ display: "flex", gap: "clamp(16px, 3vw, 28px)" }}>
             {items.map((it) => (
-              <Magnetic key={it.href} strength={0.25}>
+              <Magnetic key={it.href} strength={0.2}>
                 <a
                   href={it.href}
-                  className="mono nav-link"
-                  data-cursor="go"
+                  className="link"
                   data-active={active === it.href}
-                  style={{
-                    position: "relative",
-                    fontSize: 12.5,
-                    letterSpacing: "0.04em",
-                    color: "var(--fg-dim)",
-                    transition: "color .2s",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--fg)")}
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.color =
-                      active === it.href ? "var(--fg)" : "var(--fg-dim)")
-                  }
+                  style={{ fontSize: 14 }}
                 >
                   {it.label}
                 </a>
               </Magnetic>
             ))}
           </nav>
-
-          <Magnetic strength={0.3}>
+          <Magnetic strength={0.25}>
             <button
               type="button"
               onClick={openPalette}
-              className="mono kbd-btn"
-              data-cursor="⌘K"
               aria-label="Open command palette"
+              className="mono kbd-btn"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 8,
-                fontSize: 11,
-                letterSpacing: "0.06em",
-                color: "var(--fg-dim)",
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid var(--line)",
+                fontSize: 11.5,
+                padding: "6px 10px",
                 borderRadius: 8,
-                padding: "6px 9px",
+                border: "1px solid var(--line)",
+                background: "var(--bg-2)",
+                color: "var(--fg-2)",
                 cursor: "pointer",
                 transition: "border-color .2s, color .2s",
               }}
             >
-              <span className="kbd-desktop" style={{ opacity: 0.8 }}>Search</span>
-              <span className="kbd-mobile" style={{ opacity: 0.9 }}>Menu</span>
+              <span className="kbd-desktop">Search</span>
+              <span className="kbd-mobile">Menu</span>
               <kbd
                 style={{
                   fontFamily: "inherit",
                   fontSize: 10.5,
                   padding: "1px 5px",
                   borderRadius: 4,
-                  background: "rgba(255,255,255,0.06)",
+                  border: "1px solid var(--line-2)",
                   color: "var(--fg)",
                 }}
               >
@@ -202,6 +128,15 @@ export default function Nav() {
           </Magnetic>
         </div>
       </div>
+      <style>{`
+        .kbd-btn:hover{ border-color: var(--line-2) !important; color: var(--fg) !important; }
+        .kbd-mobile{ display:none }
+        @media (max-width: 560px){
+          .nav-links{ display:none !important }
+          .kbd-desktop, .kbd-btn kbd{ display:none !important }
+          .kbd-mobile{ display:inline }
+        }
+      `}</style>
     </header>
   );
 }

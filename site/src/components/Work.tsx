@@ -1,244 +1,139 @@
 "use client";
 
-import { useRef } from "react";
 import Reveal from "./Reveal";
 import { projects, type Project } from "@/lib/data";
 
-function Card({ p }: { p: Project }) {
-  const ref = useRef<HTMLElement>(null);
-
-  const onMove = (e: React.MouseEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    el.style.setProperty("--mx", `${e.clientX - r.left}px`);
-    el.style.setProperty("--my", `${e.clientY - r.top}px`);
-  };
-
-  const Inner = (
+function Row({ p, i }: { p: Project; i: number }) {
+  const inner = (
     <>
-      {/* spotlight that follows the cursor, tinted with the project accent */}
-      <div
-        className="card-spot"
-        style={{
-          position: "absolute",
-          inset: 0,
-          opacity: 0,
-          transition: "opacity .4s",
-          background: `radial-gradient(420px 420px at var(--mx) var(--my), ${p.accent}22, transparent 60%)`,
-          pointerEvents: "none",
-        }}
-      />
-      <div
-        style={{
-          position: "relative",
-          display: "flex",
-          flexDirection: "column",
-          height: "100%",
-          gap: 18,
-        }}
-      >
+      <span className="mono row-idx" style={{ fontSize: 12.5, color: "var(--fg-3)" }}>
+        0{i + 1}
+      </span>
+      <div style={{ minWidth: 0 }}>
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
+            alignItems: "baseline",
+            gap: 12,
+            flexWrap: "wrap",
           }}
         >
-          <span
-            className="mono"
-            style={{ fontSize: 12, color: "var(--fg-faint)" }}
-          >
-            {p.index}
-          </span>
-          <span
-            className="mono"
+          <h3
             style={{
-              fontSize: 11,
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              color: p.accent,
-              border: `1px solid ${p.accent}55`,
-              borderRadius: 999,
-              padding: "4px 11px",
-              whiteSpace: "nowrap",
+              margin: 0,
+              fontSize: "clamp(22px, 2.6vw, 30px)",
+              fontWeight: 600,
+              letterSpacing: "-0.03em",
+              lineHeight: 1.1,
             }}
           >
-            {p.status}
+            {p.title}
+          </h3>
+          <span className="mono" style={{ fontSize: 12.5, color: "var(--fg-3)" }}>
+            {p.year}
           </span>
         </div>
-
-        <h3
-          style={{
-            fontSize: "clamp(26px, 3.4vw, 40px)",
-            fontWeight: 600,
-            letterSpacing: "-0.03em",
-            margin: 0,
-            lineHeight: 1.05,
-          }}
-        >
-          {p.title}
-        </h3>
-        <p
-          className="serif"
-          style={{
-            fontSize: "clamp(16px, 1.8vw, 20px)",
-            color: "var(--fg)",
-            margin: 0,
-          }}
-        >
-          {p.tagline}
-        </p>
         <p
           style={{
-            fontSize: 14.5,
-            lineHeight: 1.6,
-            color: "var(--fg-dim)",
-            margin: 0,
-            flex: 1,
+            margin: "10px 0 0",
+            maxWidth: 560,
+            fontSize: 15.5,
+            lineHeight: 1.55,
+            color: "var(--fg-2)",
+            textWrap: "pretty",
           }}
         >
-          {p.description}
+          {p.line}
         </p>
-
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 8,
-            marginTop: 4,
-          }}
-        >
-          {p.stack.map((s) => (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 14 }}>
+          {p.tags.map((t) => (
             <span
-              key={s}
+              key={t}
               className="mono"
               style={{
                 fontSize: 11.5,
-                color: "var(--fg-dim)",
+                padding: "4px 9px",
+                borderRadius: 6,
                 border: "1px solid var(--line)",
-                borderRadius: 7,
-                padding: "5px 9px",
+                color: "var(--fg-2)",
               }}
             >
-              {s}
+              {t}
             </span>
           ))}
         </div>
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginTop: 8,
-            borderTop: "1px solid var(--line)",
-            paddingTop: 16,
-          }}
-        >
-          <span className="mono" style={{ fontSize: 12, color: "var(--fg-faint)" }}>
-            {p.year}
-          </span>
-          {p.href && (
-            <span
-              className="mono"
-              style={{ fontSize: 12.5, color: p.accent }}
-            >
-              {p.href.includes("github") ? "View source ↗" : "Visit ↗"}
-            </span>
-          )}
-        </div>
       </div>
+      <span
+        className="row-arrow"
+        aria-hidden
+        style={{
+          fontSize: 22,
+          color: "var(--fg-3)",
+          transition: "transform .3s cubic-bezier(.22,1,.36,1), color .2s",
+          justifySelf: "end",
+        }}
+      >
+        {p.href ? "↗" : ""}
+      </span>
     </>
   );
 
-  const baseStyle: React.CSSProperties = {
-    position: "relative",
-    display: "block",
-    overflow: "hidden",
-    padding: "clamp(22px, 2.6vw, 34px)",
-    borderRadius: 18,
-    background:
-      "linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.008))",
-    border: "1px solid var(--line)",
-    transition: "border-color .35s, transform .35s",
-  };
-
-  const hoverOn = (e: React.MouseEvent) => {
-    const el = e.currentTarget as HTMLElement;
-    el.style.borderColor = `${p.accent}66`;
-    el.style.transform = "translateY(-4px)";
-    const spot = el.querySelector<HTMLElement>(".card-spot");
-    if (spot) spot.style.opacity = "1";
-  };
-  const hoverOff = (e: React.MouseEvent) => {
-    const el = e.currentTarget as HTMLElement;
-    el.style.borderColor = "var(--line)";
-    el.style.transform = "translateY(0)";
-    const spot = el.querySelector<HTMLElement>(".card-spot");
-    if (spot) spot.style.opacity = "0";
+  const style: React.CSSProperties = {
+    display: "grid",
+    gridTemplateColumns: "48px minmax(0, 1fr) 32px",
+    gap: "clamp(12px, 3vw, 32px)",
+    alignItems: "start",
+    padding: "clamp(24px, 3.5vw, 36px) clamp(8px, 1.5vw, 20px)",
+    marginInline: "clamp(-8px, -1.5vw, -20px)",
+    borderTop: "1px solid var(--line)",
+    borderRadius: 14,
+    transition: "background .25s",
   };
 
   return p.href ? (
-    <a
-      ref={ref as React.Ref<HTMLAnchorElement>}
-      href={p.href}
-      target="_blank"
-      rel="noreferrer"
-      data-cursor={p.href.includes("github") ? "source" : "open"}
-      style={baseStyle}
-      onMouseMove={onMove}
-      onMouseEnter={hoverOn}
-      onMouseLeave={hoverOff}
-    >
-      {Inner}
+    <a href={p.href} target="_blank" rel="noreferrer" className="work-row" style={style}>
+      {inner}
     </a>
   ) : (
-    <div
-      ref={ref as React.Ref<HTMLDivElement>}
-      style={baseStyle}
-      onMouseMove={onMove}
-      onMouseEnter={hoverOn}
-      onMouseLeave={hoverOff}
-    >
-      {Inner}
+    <div className="work-row" style={style}>
+      {inner}
     </div>
   );
 }
 
 export default function Work() {
   return (
-    <section id="work" style={{ padding: "clamp(60px, 10vh, 120px) 0" }}>
-      <div className="container-x">
+    <section id="work" style={{ padding: "clamp(48px, 8vh, 96px) 0" }}>
+      <div className="wrap">
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "baseline",
-            marginBottom: 48,
-            flexWrap: "wrap",
-            gap: 12,
+            marginBottom: 20,
           }}
         >
-          <span className="eyebrow">( 04 )&nbsp;&nbsp;Selected work</span>
-          <span className="mono" style={{ fontSize: 12.5, color: "var(--fg-dim)" }}>
-            Code, deals & policy
+          <span className="label">Selected work</span>
+          <span className="mono" style={{ fontSize: 12.5, color: "var(--fg-3)" }}>
+            Code · deals · policy
           </span>
         </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 380px), 1fr))",
-            gap: "clamp(18px, 2vw, 26px)",
-          }}
-        >
+        <div>
           {projects.map((p, i) => (
-            <Reveal key={p.id} delay={i * 80}>
-              <Card p={p} />
+            <Reveal key={p.id} delay={i * 70}>
+              <Row p={p} i={i} />
             </Reveal>
           ))}
         </div>
       </div>
+      <style>{`
+        .work-row:hover{ background: var(--bg-2); }
+        .work-row:hover .row-arrow{ transform: translate(3px,-3px); color: var(--accent); }
+        @media (max-width: 560px){
+          .work-row{ grid-template-columns: minmax(0,1fr) 24px !important; }
+          .row-idx{ display:none }
+        }
+      `}</style>
     </section>
   );
 }

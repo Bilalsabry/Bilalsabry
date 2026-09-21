@@ -1,29 +1,21 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import Manifesto from "@/components/Manifesto";
-import Showreel from "@/components/Showreel";
-import About from "@/components/About";
-import Stats from "@/components/Stats";
+import Proof from "@/components/Proof";
 import Work from "@/components/Work";
-import Approach from "@/components/Approach";
-import Now from "@/components/Now";
-import Timeline from "@/components/Timeline";
+import About from "@/components/About";
 import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
-    <main>
+    <>
       <Nav />
-      <Hero />
-      <Manifesto />
-      <Showreel />
-      <About />
-      <Stats />
-      <Work />
-      <Approach />
-      <Now />
-      <Timeline />
+      <main>
+        <Hero />
+        <Proof />
+        <Work />
+        <About />
+      </main>
       <Contact />
-    </main>
+    </>
   );
 }
