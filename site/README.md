@@ -45,6 +45,29 @@ src/
     Hero / Manifesto / Stats / Work / Approach / Timeline / Contact
 ```
 
+## Features
+
+- **⌘K / Ctrl+K command palette** (also `/`) — fuzzy search over sections, links,
+  projects; copy email; open the terminal. Doubles as the mobile menu.
+- **Hidden terminal** — press `` ` ``. `help`, `whoami`, `ls`, `cat projects.md`,
+  `go work`, `open github`, `neofetch`… All output is generated from `data.ts`.
+- **Now section** — what I'm focused on this season, with a live Princeton clock.
+- **Click-to-copy email** with a toast (⌘-click still opens the mail client).
+- **Magnetic nav + links**, active-section highlighting, keyboard focus rings.
+- **Print stylesheet** — ⌘P gives a clean light one-pager.
+- **SEO for the domain** — `sitemap.xml`, `robots.txt`, web manifest, canonical
+  URL, Open Graph/Twitter cards, and JSON-LD `Person` structured data.
+
+## Deploying to bilalsabry.com (Vercel)
+
+1. Import the repo in Vercel. If the site lives in `/site`, set **Root Directory**
+   to `site`; if this folder is the repo root, leave it blank.
+2. In the project's **Domains** tab add `bilalsabry.com` and `www.bilalsabry.com`.
+3. At your registrar, point DNS at Vercel:
+   - `A` record for `@` → `76.76.21.21`
+   - `CNAME` for `www` → `cname.vercel-dns.com`
+4. Vercel issues the TLS certificate automatically once DNS propagates.
+
 ## Notes
 
 - Respects `prefers-reduced-motion` (shader, scramble, counters, reveals all degrade gracefully).

@@ -221,3 +221,47 @@ export const timeline: TimelineItem[] = [
     note: "Two majors in 2.5 years. CFA Level I candidate.",
   },
 ];
+
+// ---------------------------------------------------------------------------
+// "Now" — what I'm focused on this season. Keep it to 3–4 items; update the
+// date when you edit it. (Idea: nownownow.com)
+// ---------------------------------------------------------------------------
+export type NowItem = {
+  kind: string; // short label: Building / Shipping / Reading / Thinking…
+  title: string;
+  body: string;
+  href?: string;
+  linkLabel?: string;
+};
+
+export const now: { updated: string; items: NowItem[] } = {
+  updated: "Sep 2026",
+  items: [
+    {
+      kind: "Building",
+      title: "Krux AI",
+      body: "Turning 300-page pharma RFPs into regulator-grade proposals in minutes. Product, customers, and the raise — all at once.",
+      href: "https://krux.bio",
+      linkLabel: "krux.bio",
+    },
+    {
+      kind: "Shipping",
+      title: "evidence v0.2.0",
+      body: "A local-first research assistant in Rust that refuses to answer without span-level citations. Open source, 60+ tests, full CI.",
+      href: "https://github.com/Bilalsabry/evidence",
+      linkLabel: "Source",
+    },
+    {
+      kind: "Writing",
+      title: "Three rules for trustworthy AI citations",
+      body: "Why “RAG with footnotes” isn’t enough, and what auditable retrieval actually requires.",
+      href: "https://github.com/Bilalsabry/evidence/blob/main/docs/devlog/2026-05-15-three-rules.md",
+      linkLabel: "Read",
+    },
+    {
+      kind: "Operating",
+      title: "TCG GreenChem",
+      body: "Strategy and finance for a pharma CDMO, reporting to the CEO. M&A, capital strategy, and the board deck.",
+    },
+  ],
+};

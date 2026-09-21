@@ -143,3 +143,31 @@ a {
   border-radius: 999px;
   border: 2px solid var(--bg);
 }
+
+/* Print: a clean, readable one-pager instead of the dark cinematic UI */
+@media print {
+  :root {
+    --bg: #fff;
+    --bg-soft: #fff;
+    --surface: #fff;
+    --fg: #111;
+    --fg-dim: #444;
+    --fg-faint: #777;
+    --line: #ddd;
+    --line-strong: #bbb;
+    --accent: #0a7a5c;
+  }
+  body { background: #fff !important; color: #111 !important; }
+  .grain::after, header, [role="dialog"], .cursor-ring, #scroll-progress { display: none !important; }
+  .grad-text { background: none; color: #111 !important; -webkit-text-fill-color: #111; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+  section, footer { padding: 24px 0 !important; break-inside: avoid; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; color: #777; }
+}
+
+/* Keyboard focus that matches the accent, only when navigating by keyboard */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}

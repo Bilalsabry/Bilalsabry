@@ -6,6 +6,7 @@ import About from "@/components/About";
 import Stats from "@/components/Stats";
 import Work from "@/components/Work";
 import Approach from "@/components/Approach";
+import Now from "@/components/Now";
 import Timeline from "@/components/Timeline";
 import Contact from "@/components/Contact";
 
@@ -20,6 +21,7 @@ export default function Home() {
       <Stats />
       <Work />
       <Approach />
+      <Now />
       <Timeline />
       <Contact />
     </main>

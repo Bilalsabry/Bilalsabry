@@ -1,8 +1,30 @@
 "use client";
 
+import { useState } from "react";
 import { profile } from "@/lib/data";
+import { copyText } from "@/lib/actions";
+import { toast } from "./Toast";
+import Magnetic from "./Magnetic";
+import LocalTime from "./LocalTime";
 
 export default function Contact() {
+  const [copied, setCopied] = useState(false);
+
+  // Click copies the address (a mailto on a machine with no mail client is a
+  // dead end); ⌘/Ctrl-click or middle-click still opens the mail client.
+  const onEmailClick = async (e: React.MouseEvent) => {
+    if (e.metaKey || e.ctrlKey) return;
+    e.preventDefault();
+    const ok = await copyText(profile.email);
+    if (ok) {
+      setCopied(true);
+      toast("Email copied to clipboard");
+      setTimeout(() => setCopied(false), 1600);
+    } else {
+      window.location.href = `mailto:${profile.email}`;
+    }
+  };
+
   return (
     <footer
       id="contact"
@@ -30,12 +52,14 @@ export default function Contact() {
       />
       <div className="container-x" style={{ position: "relative" }}>
         <span className="eyebrow" style={{ display: "block", marginBottom: 28 }}>
-          ( 07 )&nbsp;&nbsp;Let’s talk
+          ( 08 )&nbsp;&nbsp;Let’s talk
         </span>
 
         <a
           href={`mailto:${profile.email}`}
-          data-cursor="email"
+          data-cursor={copied ? "copied ✓" : "copy"}
+          onClick={onEmailClick}
+          title="Click to copy · ⌘-click to open mail"
           style={{
             display: "inline-block",
             fontSize: "clamp(34px, 8vw, 110px)",
@@ -50,6 +74,18 @@ export default function Contact() {
         >
           {profile.email}
         </a>
+        <div
+          className="mono"
+          style={{
+            marginTop: 18,
+            fontSize: 12.5,
+            color: "var(--fg-faint)",
+            letterSpacing: "0.04em",
+          }}
+        >
+          Click to copy · It’s <LocalTime style={{ color: "var(--fg-dim)" }} /> in
+          Princeton right now.
+        </div>
 
         <div
           style={{
@@ -64,8 +100,8 @@ export default function Contact() {
             { label: "GitHub ↗", href: profile.links.github },
             { label: "Krux AI ↗", href: profile.links.krux },
           ].map((l) => (
+            <Magnetic key={l.label} strength={0.3}>
             <a
-              key={l.label}
               href={l.href}
               target="_blank"
               rel="noreferrer"
@@ -83,6 +119,7 @@ export default function Contact() {
             >
               {l.label}
             </a>
+            </Magnetic>
           ))}
         </div>
 
@@ -101,7 +138,11 @@ export default function Contact() {
         >
           <span>© {new Date().getFullYear()} Bilal Sabry</span>
           <span>{profile.location}</span>
-          <span>Built with Next.js · WebGL · Motion</span>
+          <span>
+            Press <kbd style={{ fontFamily: "inherit", color: "var(--fg-dim)" }}>⌘K</kbd>{" "}
+            to search · <kbd style={{ fontFamily: "inherit", color: "var(--fg-dim)" }}>`</kbd>{" "}
+            for a surprise
+          </span>
         </div>
       </div>
     </footer>
