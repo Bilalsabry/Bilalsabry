@@ -564,7 +564,9 @@
     "year": 2019,
     "volume": "52",
     "issue": "4",
-    "pages": "1101-1112"
+    "pages": "1101-1112",
+    "selected": true,
+    "note": "Accounts overview of the BIBOP ligand family for asymmetric hydrogenation."
   },
   {
     "pmid": "29542928",
@@ -1460,7 +1462,9 @@
     "year": 2015,
     "volume": "54",
     "issue": "24",
-    "pages": "7144-8"
+    "pages": "7144-8",
+    "selected": true,
+    "note": "Atroposelective synthesis at scale."
   },
   {
     "pmid": "25562342",
@@ -1855,7 +1859,9 @@
     "year": 2014,
     "volume": "136",
     "issue": "2",
-    "pages": "570-3"
+    "pages": "570-3",
+    "selected": true,
+    "note": "Asymmetric Suzuki–Miyaura coupling applied to complex natural products."
   },
   {
     "pmid": "25061799",
@@ -2515,7 +2521,9 @@
     "year": 2012,
     "volume": "51",
     "issue": "6",
-    "pages": "1400-4"
+    "pages": "1400-4",
+    "selected": true,
+    "note": "Simple, scalable enamide synthesis with ammonia."
   },
   {
     "pmid": "22497425",
@@ -2749,7 +2757,9 @@
     "year": 2010,
     "volume": "49",
     "issue": "34",
-    "pages": "5879-83"
+    "pages": "5879-83",
+    "selected": true,
+    "note": "Broadly applicable coupling catalyst for process settings."
   },
   {
     "pmid": "20481453",
@@ -3298,7 +3308,9 @@
     "year": 2007,
     "volume": "36",
     "issue": "7",
-    "pages": "1120-32"
+    "pages": "1120-32",
+    "selected": true,
+    "note": "Chemical Society Reviews account of azaindole chemistry."
   },
   {
     "pmid": "17194115",
@@ -3415,7 +3427,9 @@
     "year": 2006,
     "volume": "106",
     "issue": "7",
-    "pages": "2734-93"
+    "pages": "2734-93",
+    "selected": true,
+    "note": "Landmark Chemical Reviews survey of asymmetric synthesis in API manufacture."
   },
   {
     "pmid": "16836302",
@@ -3429,7 +3443,9 @@
     "year": 2006,
     "volume": "106",
     "issue": "7",
-    "pages": "2843-74"
+    "pages": "2843-74",
+    "selected": true,
+    "note": "Crixivan chemistry; the chiral auxiliary that enabled the first practical HIV protease inhibitor process."
   },
   {
     "pmid": "17081017",
@@ -3669,7 +3685,9 @@
     "year": 2003,
     "volume": "42",
     "issue": "18",
-    "pages": "2032-5"
+    "pages": "2032-5",
+    "selected": true,
+    "note": "Practical route to enantiopure sulfoxides."
   },
   {
     "pmid": "12090787",
@@ -3727,7 +3745,9 @@
     "year": 2002,
     "volume": "124",
     "issue": "27",
-    "pages": "7880-1"
+    "pages": "7880-1",
+    "selected": true,
+    "note": "Foundational sulfinamide auxiliary chemistry now used across the industry."
   },
   {
     "pmid": "11178823",
