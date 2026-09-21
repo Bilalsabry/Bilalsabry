@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import profile from '../data/profile.json';
+---
+<Base title="Contact" description="Contact details and profiles for Dr. Chris H. Senanayake.">
+  <section class="section">
+    <div class="container two-col">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <h1>Get in touch</h1>
+        <p class="lede">For collaborations, speaking invitations and process-development enquiries.</p>
+      </div>
+      <div class="grid" style="align-content:start">
+        <div class="card">
+          <h3>Email</h3>
+          {profile.email
+            ? <p style="margin:0"><a href={`mailto:${profile.email}`}>{profile.email}</a></p>
+            : <p class="muted" style="margin:0">Email address to be added.</p>}
+        </div>
+        <div class="card">
+          <h3>Company</h3>
+          <p style="margin:0"><a href={profile.links.company} rel="noopener">TCG GreenChem, Inc.</a><br /><span class="muted">{profile.location}</span></p>
+        </div>
+        <div class="card">
+          <h3>Profiles</h3>
+          <p style="margin:0">
+            <a href={profile.links.scholar} rel="noopener">Google Scholar</a><br />
+            <a href={profile.links.linkedin} rel="noopener">LinkedIn</a>
+            {profile.links.orcid && <><br /><a href={profile.links.orcid} rel="noopener">ORCID</a></>}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

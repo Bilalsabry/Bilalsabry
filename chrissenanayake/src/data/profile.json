@@ -1,0 +1,65 @@
+{
+  "name": "Chris H. Senanayake",
+  "title": "Dr.",
+  "degree": "Ph.D.",
+  "tagline": "Process chemist, drug developer and champion of green, sustainable manufacturing.",
+  "role": "Founder and Chief Executive Officer, TCG GreenChem, Inc.",
+  "roleSecondary": "Chief Scientific Officer, TCG Lifesciences",
+  "location": "Richmond, Virginia, USA",
+  "email": "",
+  "links": {
+    "scholar": "https://scholar.google.com/citations?user=4zG_wzQAAAAJ&hl=en",
+    "linkedin": "https://www.linkedin.com/in/chris-senanayake-ph-d-84140311/",
+    "company": "https://tcggreenchem.com/",
+    "orcid": ""
+  },
+  "stats": [
+    { "value": "500+", "label": "Papers, patents, chapters and reviews" },
+    { "value": "115+", "label": "Patents" },
+    { "value": "5", "label": "Marketed medicines delivered" },
+    { "value": "35+", "label": "Years in pharmaceutical R&D" }
+  ],
+  "summary": "Dr. Chris H. Senanayake is a process chemist whose career spans more than three decades at Merck, Sepracor, Boehringer Ingelheim and, today, TCG GreenChem, the company he founded. He has been instrumental in bringing several medicines to market, including Crixivan, Lunesta, Jardiance, formoterol and desvenlafaxine, and is recognised internationally for developing practical, sustainable manufacturing routes to active pharmaceutical ingredients.",
+  "bio": [
+    "Chris H. Senanayake was born in Sri Lanka, where he earned a Bachelor of Science degree with First Class honours. After moving to the United States he completed an M.S. in synthetic chemistry at Bowling Green State University under Professor Thomas Kinstle, and in 1987 received his Ph.D. from Wayne State University under Professor James H. Rigby. His doctoral work centred on the total synthesis of complex natural products, including the ophiobolanes, and delivered the first total synthesis of grosshemin in the guaianolide family.",
+    "His industrial career began at Dow Chemical before he joined Merck's Process Research group, where he contributed to the development of Crixivan, one of the first HIV protease inhibitors. At Sepracor he led process development for medicines including Lunesta, formoterol and desvenlafaxine.",
+    "In 2002 he joined Boehringer Ingelheim Pharmaceuticals in Ridgefield, Connecticut, and for fifteen years served as Vice President of Chemical Development, leading a large team of scientists and engineers responsible for routes to clinical and commercial APIs, including Jardiance.",
+    "In 2018 he became Chief Executive Officer of AstaTech (Chengdu) BioPharmaceutical Corporation and founded AstaGreen Chem, Inc. in Richmond, Virginia. In October 2019 he was appointed Chief Scientific Officer of TCG Lifesciences and founded TCG GreenChem, Inc., a US-based CDMO focused on green and sustainable chemical process development, where he serves as CEO.",
+    "He is the co-author of more than 500 papers, patents, book chapters and review articles, and an inventor on more than 115 patents spanning synthetic organic chemistry, asymmetric catalysis, process development and the design of improved chemical entities."
+  ],
+  "education": [
+    { "degree": "Ph.D., Organic Chemistry", "institution": "Wayne State University", "detail": "Advisor: Professor James H. Rigby. Total synthesis of ophiobolanes; first total synthesis of grosshemin.", "year": "1987" },
+    { "degree": "M.S., Synthetic Chemistry", "institution": "Bowling Green State University", "detail": "Advisor: Professor Thomas Kinstle.", "year": "" },
+    { "degree": "B.S., Chemistry (First Class)", "institution": "Sri Lanka", "detail": "", "year": "" }
+  ],
+  "career": [
+    { "years": "2019 – present", "role": "Founder and Chief Executive Officer", "org": "TCG GreenChem, Inc.", "place": "Richmond, Virginia", "detail": "Also Chief Scientific Officer of TCG Lifesciences Pvt. Ltd." },
+    { "years": "2018 – 2019", "role": "Chief Executive Officer", "org": "AstaTech (Chengdu) BioPharmaceutical Corporation", "place": "", "detail": "Founded AstaGreen Chem, Inc., Richmond, Virginia." },
+    { "years": "2002 – 2018", "role": "Vice President, Chemical Development", "org": "Boehringer Ingelheim Pharmaceuticals, Inc.", "place": "Ridgefield, Connecticut", "detail": "Led chemical development for clinical and commercial APIs, including Jardiance." },
+    { "years": "", "role": "Process Research and Development", "org": "Sepracor, Inc.", "place": "Marlborough, Massachusetts", "detail": "Lunesta, formoterol and desvenlafaxine." },
+    { "years": "", "role": "Process Research", "org": "Merck & Co.", "place": "Rahway, New Jersey", "detail": "Contributed to the development of Crixivan (indinavir)." },
+    { "years": "", "role": "Research Chemist", "org": "Dow Chemical Company", "place": "", "detail": "" }
+  ],
+  "medicines": [
+    { "name": "Crixivan", "generic": "indinavir", "company": "Merck", "area": "HIV" },
+    { "name": "Lunesta", "generic": "eszopiclone", "company": "Sepracor", "area": "Insomnia" },
+    { "name": "Jardiance", "generic": "empagliflozin", "company": "Boehringer Ingelheim", "area": "Type 2 diabetes, heart failure" },
+    { "name": "Formoterol", "generic": "arformoterol", "company": "Sepracor", "area": "COPD, asthma" },
+    { "name": "Desvenlafaxine", "generic": "desvenlafaxine", "company": "Sepracor / Wyeth", "area": "Depression" }
+  ],
+  "awards": [
+    { "year": "2022", "title": "CEO Awards (two categories)", "org": "Business Worldwide Magazine", "detail": "Recognising leadership of TCG GreenChem." },
+    { "year": "2010", "title": "Siegfried Gold Medal", "org": "Siegfried AG", "detail": "For the development of practical processes for active pharmaceutical ingredients and contributions to process chemistry." }
+  ],
+  "editorial": [
+    "Editorial Advisory Board, Organic Process Research & Development (ACS)",
+    "Editorial Board, Organic Syntheses",
+    "Editorial Board, Advanced Synthesis & Catalysis"
+  ],
+  "research": [
+    { "title": "Practical asymmetric synthesis", "text": "Scalable catalytic and stoichiometric methods for setting stereocentres in drug candidates, including chiral sulfinamide chemistry and asymmetric hydrogenation." },
+    { "title": "Process development for APIs", "text": "Route design, optimisation and scale-up of manufacturing processes for clinical and commercial active pharmaceutical ingredients." },
+    { "title": "Green and sustainable chemistry", "text": "Reducing waste, solvent use and cost through catalysis, telescoped steps and environmentally benign reagents." },
+    { "title": "Catalysis and new reagents", "text": "Transition-metal catalysed cross-coupling, C–H functionalisation and the design of ligands and reagents that make difficult transformations practical at scale." }
+  ]
+}

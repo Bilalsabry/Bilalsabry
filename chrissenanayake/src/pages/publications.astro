@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import PubList from '../components/PubList.astro';
+---
+<Base title="Publications" description="Peer-reviewed publications by Dr. Chris H. Senanayake, searchable by title, author, journal and year.">
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Publications</span>
+      <h1>Publications</h1>
+      <p class="lede">Peer-reviewed papers, reviews and book chapters. Each entry links to the publisher's page via its DOI.</p>
+      <PubList />
+    </div>
+  </section>
+</Base>

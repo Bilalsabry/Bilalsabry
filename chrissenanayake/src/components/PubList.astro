@@ -1,0 +1,107 @@
+---
+import pubs from '../data/publications.json';
+
+interface Pub {
+  pmid?: string; doi?: string | null; title: string; authors: string[]; journal: string;
+  year: number; volume?: string | null; issue?: string | null; pages?: string | null; selected?: boolean;
+}
+interface Props { limit?: number; interactive?: boolean; }
+const { limit, interactive = true } = Astro.props;
+
+const all = (pubs as Pub[]).slice().sort((a, b) => b.year - a.year || a.title.localeCompare(b.title));
+const list = limit ? all.slice(0, limit) : all;
+const years = [...new Set(all.map((p) => p.year))].sort((a, b) => b - a);
+
+const isHim = (a: string) => /senanayake/i.test(a);
+const venue = (p: Pub) => {
+  let s = '';
+  if (p.volume) s += p.volume;
+  if (p.issue) s += ` (${p.issue})`;
+  if (p.pages) s += `${s ? ', ' : ''}${p.pages}`;
+  return s;
+};
+const link = (p: Pub) => (p.doi ? `https://doi.org/${p.doi}` : p.pmid ? `https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/` : undefined);
+
+// Group by year for the full list
+const byYear = new Map<number, Pub[]>();
+for (const p of list) byYear.set(p.year, [...(byYear.get(p.year) ?? []), p]);
+---
+{interactive && (
+  <div class="pub-toolbar">
+    <input id="pub-q" type="search" placeholder="Search title, author or journal…" aria-label="Search publications" autocomplete="off" />
+    <select id="pub-year" aria-label="Filter by year">
+      <option value="">All years</option>
+      {years.map((y) => <option value={y}>{y}</option>)}
+    </select>
+    <select id="pub-sort" aria-label="Sort">
+      <option value="new">Newest first</option>
+      <option value="old">Oldest first</option>
+    </select>
+  </div>
+)}
+{interactive && <div class="pub-count" id="pub-count">{all.length} publications</div>}
+
+<div id="pub-list" data-total={all.length}>
+  {[...byYear.entries()].map(([year, items]) => (
+    <section class="pub-group" data-year={year}>
+      {!limit && <h2 class="pub-year">{year}</h2>}
+      {items.map((p) => (
+        <article class="pub" data-year={p.year} data-text={`${p.title} ${p.authors.join(' ')} ${p.journal}`.toLowerCase()}>
+          <div class="title">{link(p) ? <a href={link(p)} rel="noopener">{p.title}</a> : p.title}</div>
+          <div class="authors">
+            {p.authors.map((a, i) => (
+              <>{isHim(a) ? <b>{a}</b> : a}{i < p.authors.length - 1 ? ', ' : ''}</>
+            ))}
+          </div>
+          <div class="venue"><em>{p.journal}</em> {p.year}{venue(p) ? `, ${venue(p)}` : ''}</div>
+          <div class="links">
+            {p.doi && <a href={`https://doi.org/${p.doi}`} rel="noopener">DOI</a>}
+            {p.pmid && <a href={`https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/`} rel="noopener">PubMed</a>}
+          </div>
+        </article>
+      ))}
+    </section>
+  ))}
+  {interactive && <div class="empty" id="pub-empty" hidden>No publications match your search.</div>}
+</div>
+
+{interactive && (
+  <script>
+    const q = document.getElementById('pub-q') as HTMLInputElement;
+    const yearSel = document.getElementById('pub-year') as HTMLSelectElement;
+    const sortSel = document.getElementById('pub-sort') as HTMLSelectElement;
+    const list = document.getElementById('pub-list')!;
+    const count = document.getElementById('pub-count')!;
+    const empty = document.getElementById('pub-empty')!;
+    const groups = [...list.querySelectorAll<HTMLElement>('.pub-group')];
+    const total = Number(list.dataset.total);
+
+    function apply() {
+      const term = q.value.trim().toLowerCase();
+      const year = yearSel.value;
+      let shown = 0;
+      for (const g of groups) {
+        let visible = 0;
+        for (const p of g.querySelectorAll<HTMLElement>('.pub')) {
+          const ok = (!year || p.dataset.year === year) && (!term || (p.dataset.text ?? '').includes(term));
+          p.hidden = !ok;
+          if (ok) visible++;
+        }
+        g.hidden = visible === 0;
+        shown += visible;
+      }
+      count.textContent = shown === total ? `${total} publications` : `${shown} of ${total} publications`;
+      empty.hidden = shown !== 0;
+    }
+    function sort() {
+      const asc = sortSel.value === 'old';
+      groups.sort((a, b) => (asc ? 1 : -1) * (Number(a.dataset.year) - Number(b.dataset.year)));
+      for (const g of groups) list.insertBefore(g, empty);
+    }
+    q.addEventListener('input', apply);
+    yearSel.addEventListener('change', apply);
+    sortSel.addEventListener('change', sort);
+    const params = new URLSearchParams(location.search);
+    if (params.get('q')) { q.value = params.get('q')!; apply(); }
+  </script>
+)}

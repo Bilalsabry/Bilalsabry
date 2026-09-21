@@ -1,0 +1,83 @@
+---
+import Base from '../layouts/Base.astro';
+import PubList from '../components/PubList.astro';
+import profile from '../data/profile.json';
+const parts = profile.name.split(' ').filter((w) => /^[A-Z]/.test(w));
+const initials = parts[0][0] + parts[parts.length - 1][0];
+---
+<Base>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">Process chemistry · Drug development · Green chemistry</span>
+        <h1>{profile.title} {profile.name}</h1>
+        <p class="role">{profile.role}<br />{profile.roleSecondary}</p>
+        <p class="lede">{profile.tagline}</p>
+        <div class="actions">
+          <a class="btn" href="/publications">Browse publications</a>
+          <a class="btn ghost" href="/about">Read the full biography</a>
+        </div>
+      </div>
+      <div class="portrait" aria-label="Portrait placeholder">
+        <!-- Replace with <img src="/portrait.jpg" alt="Dr. Chris H. Senanayake" /> once a photo is available -->
+        <span>{initials}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="stats">
+        {profile.stats.map((s) => (
+          <div class="stat"><div class="value">{s.value}</div><div class="label">{s.label}</div></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container two-col">
+      <div>
+        <span class="eyebrow">Overview</span>
+        <h2>Three decades of turning molecules into medicines</h2>
+      </div>
+      <div class="prose">
+        <p>{profile.summary}</p>
+        <p><a href="/about">Full biography →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Medicines</span>
+      <h2>Marketed medicines he helped bring to patients</h2>
+      <div class="pills" style="margin-top:1.2rem">
+        {profile.medicines.map((m) => (
+          <div class="pill">{m.name} <span>· {m.generic} · {m.area}</span></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Research</span>
+      <h2>Areas of work</h2>
+      <div class="grid grid-2" style="margin-top:1.5rem">
+        {profile.research.map((r) => (
+          <div class="card"><h3>{r.title}</h3><p class="muted" style="margin:0">{r.text}</p></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Recent</span>
+      <h2>Latest publications</h2>
+      <PubList limit={5} interactive={false} />
+      <p style="margin-top:1.5rem"><a class="btn ghost" href="/publications">See all publications</a></p>
+    </div>
+  </section>
+</Base>

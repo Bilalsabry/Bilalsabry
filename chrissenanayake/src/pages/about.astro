@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import profile from '../data/profile.json';
+---
+<Base title="About" description={profile.summary}>
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">About</span>
+      <h1>Biography</h1>
+      <div class="prose" style="margin-top:1.5rem">
+        {profile.bio.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container two-col">
+      <div>
+        <span class="eyebrow">Career</span>
+        <h2>Positions</h2>
+        <ul class="timeline" style="margin-top:1.5rem">
+          {profile.career.map((c) => (
+            <li>
+              {c.years && <div class="when">{c.years}</div>}
+              <div class="what">{c.role}</div>
+              <div class="where">{c.org}{c.place ? `, ${c.place}` : ''}</div>
+              {c.detail && <div class="detail">{c.detail}</div>}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <span class="eyebrow">Education</span>
+        <h2>Degrees</h2>
+        <ul class="timeline" style="margin-top:1.5rem">
+          {profile.education.map((e) => (
+            <li>
+              {e.year && <div class="when">{e.year}</div>}
+              <div class="what">{e.degree}</div>
+              <div class="where">{e.institution}</div>
+              {e.detail && <div class="detail">{e.detail}</div>}
+            </li>
+          ))}
+        </ul>
+
+        <span class="eyebrow" style="margin-top:2rem">Service</span>
+        <h2>Editorial boards</h2>
+        <ul style="margin-top:1rem; padding-left:1.2rem; color: var(--ink-2)">
+          {profile.editorial.map((e) => <li style="margin-bottom:.4rem">{e}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>
