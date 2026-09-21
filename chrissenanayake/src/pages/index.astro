@@ -1,7 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import PubList from '../components/PubList.astro';
+import Medicines from '../components/Medicines.astro';
+import SelectedPapers from '../components/SelectedPapers.astro';
 import profile from '../data/profile.json';
+import { readFileSync } from 'node:fs';
+const bgMol = readFileSync(new URL('../../public/molecules/empagliflozin.svg', import.meta.url), 'utf8').replace(/<\?xml[^>]*>/, '').replace(/width='\d+px' height='\d+px'/, "width='100%' height='100%'").replace('<svg', '<svg aria-hidden="true"');
 const parts = profile.name.split(' ').filter((w) => /^[A-Z]/.test(w));
 const initials = parts[0][0] + parts[parts.length - 1][0];
 ---
@@ -12,72 +15,97 @@ const initials = parts[0][0] + parts[parts.length - 1][0];
         <span class="eyebrow">Process chemistry · Drug development · Green chemistry</span>
         <h1>{profile.title} {profile.name}</h1>
         <p class="role">{profile.role}<br />{profile.roleSecondary}</p>
-        <p class="lede">{profile.tagline}</p>
+        <p class="lede">{profile.tagline} Over three decades at Merck, Sepracor and Boehringer Ingelheim he helped bring Crixivan, Lunesta, Jardiance and other medicines to patients.</p>
         <div class="actions">
           <a class="btn" href="/publications">Browse publications</a>
-          <a class="btn ghost" href="/about">Read the full biography</a>
+          <a class="btn ghost" href="/about">Biography</a>
+        </div>
+        <div class="hero-numbers">
+          {profile.stats.map((s) => <div><div class="n">{s.value}</div><div class="l">{s.label}</div></div>)}
         </div>
       </div>
       <div class="portrait" aria-label="Portrait placeholder">
+        <div class="molecule-bg" set:html={bgMol} />
         <!-- Replace with <img src="/portrait.jpg" alt="Dr. Chris H. Senanayake" /> once a photo is available -->
-        <span>{initials}</span>
+        <span style="position:relative">{initials}</span>
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="container reveal" style="margin-bottom: clamp(3rem, 7vw, 5.5rem)">
+    <div class="facts">
+      {profile.facts.map((f) => <div class="fact"><div class="k">{f.label}</div><div class="v">{f.value}</div></div>)}
+    </div>
+  </section>
+
+  <section class="section tint" id="medicines">
     <div class="container">
-      <div class="stats">
-        {profile.stats.map((s) => (
-          <div class="stat"><div class="value">{s.value}</div><div class="label">{s.label}</div></div>
+      <div class="section-head reveal">
+        <div><span class="eyebrow">Molecules to medicines</span><h2>Five medicines he helped bring to patients</h2></div>
+        <p class="muted small" style="max-width:38ch;margin:0">Each structure is the active ingredient as approved. His role spanned route invention, scale-up and leadership of the chemistry organisation.</p>
+      </div>
+      <Medicines />
+    </div>
+  </section>
+
+  <section class="section" id="career">
+    <div class="container">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">Career</span><h2>From Sri Lanka to the C-suite</h2></div>
+        <a class="more" href="/about">Full biography →</a>
+      </div>
+      <div class="tl reveal">
+        {profile.career.slice().reverse().map((c) => (
+          <div class="tl-item">
+            <div class="when">{c.years}</div>
+            <div class="what">{c.role}</div>
+            <div class="where">{c.org}</div>
+            {c.detail && <div class="detail">{c.detail}</div>}
+          </div>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section tint" id="selected">
+    <div class="container">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">Selected papers</span><h2>Ten papers that shaped the field</h2></div>
+        <a class="more" href="/publications">All publications →</a>
+      </div>
+      <SelectedPapers />
+    </div>
+  </section>
+
+  <section class="section" id="research">
     <div class="container two-col">
-      <div>
-        <span class="eyebrow">Overview</span>
-        <h2>Three decades of turning molecules into medicines</h2>
+      <div class="reveal">
+        <span class="eyebrow">Philosophy</span>
+        <p class="quote">{profile.philosophy}</p>
       </div>
-      <div class="prose">
-        <p>{profile.summary}</p>
-        <p><a href="/about">Full biography →</a></p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <span class="eyebrow">Medicines</span>
-      <h2>Marketed medicines he helped bring to patients</h2>
-      <div class="pills" style="margin-top:1.2rem">
-        {profile.medicines.map((m) => (
-          <div class="pill">{m.name} <span>· {m.generic} · {m.area}</span></div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <span class="eyebrow">Research</span>
-      <h2>Areas of work</h2>
-      <div class="grid grid-2" style="margin-top:1.5rem">
+      <div class="grid reveal">
         {profile.research.map((r) => (
-          <div class="card"><h3>{r.title}</h3><p class="muted" style="margin:0">{r.text}</p></div>
+          <a class="card" href={`/research#${r.slug}`}>
+            <h3 style="margin-bottom:.25rem">{r.title}</h3>
+            <p class="muted" style="margin:0">{r.short}</p>
+          </a>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <span class="eyebrow">Recent</span>
-      <h2>Latest publications</h2>
-      <PubList limit={5} interactive={false} />
-      <p style="margin-top:1.5rem"><a class="btn ghost" href="/publications">See all publications</a></p>
+  <section class="section tint">
+    <div class="container two-col" style="align-items:center">
+      <div class="reveal">
+        <span class="eyebrow">Recognition</span>
+        <h2>Siegfried Gold Medal, 2010</h2>
+        <p class="lede">For the development of practical processes for active pharmaceutical ingredients. <a href="/awards">All awards →</a></p>
+      </div>
+      <div class="reveal">
+        <span class="eyebrow">Get in touch</span>
+        <h2>Collaborations and speaking</h2>
+        <p class="lede">For process-development partnerships, keynotes and advisory roles. <a href="/contact">Contact →</a></p>
+      </div>
     </div>
   </section>
 </Base>

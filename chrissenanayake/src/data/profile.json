@@ -14,10 +14,22 @@
     "orcid": ""
   },
   "stats": [
-    { "value": "500+", "label": "Papers, patents, chapters and reviews" },
-    { "value": "115+", "label": "Patents" },
-    { "value": "5", "label": "Marketed medicines delivered" },
-    { "value": "35+", "label": "Years in pharmaceutical R&D" }
+    {
+      "value": "500+",
+      "label": "Papers, patents, chapters and reviews"
+    },
+    {
+      "value": "115+",
+      "label": "Patents"
+    },
+    {
+      "value": "5",
+      "label": "Marketed medicines delivered"
+    },
+    {
+      "value": "35+",
+      "label": "Years in pharmaceutical R&D"
+    }
   ],
   "summary": "Dr. Chris H. Senanayake is a process chemist whose career spans more than three decades at Merck, Sepracor, Boehringer Ingelheim and, today, TCG GreenChem, the company he founded. He has been instrumental in bringing several medicines to market, including Crixivan, Lunesta, Jardiance, formoterol and desvenlafaxine, and is recognised internationally for developing practical, sustainable manufacturing routes to active pharmaceutical ingredients.",
   "bio": [
@@ -28,28 +40,136 @@
     "He is the co-author of more than 500 papers, patents, book chapters and review articles, and an inventor on more than 115 patents spanning synthetic organic chemistry, asymmetric catalysis, process development and the design of improved chemical entities."
   ],
   "education": [
-    { "degree": "Ph.D., Organic Chemistry", "institution": "Wayne State University", "detail": "Advisor: Professor James H. Rigby. Total synthesis of ophiobolanes; first total synthesis of grosshemin.", "year": "1987" },
-    { "degree": "M.S., Synthetic Chemistry", "institution": "Bowling Green State University", "detail": "Advisor: Professor Thomas Kinstle.", "year": "" },
-    { "degree": "B.S., Chemistry (First Class)", "institution": "Sri Lanka", "detail": "", "year": "" }
+    {
+      "degree": "Ph.D., Organic Chemistry",
+      "institution": "Wayne State University",
+      "detail": "Advisor: Professor James H. Rigby. Total synthesis of ophiobolanes; first total synthesis of grosshemin.",
+      "year": "1987"
+    },
+    {
+      "degree": "M.S., Synthetic Chemistry",
+      "institution": "Bowling Green State University",
+      "detail": "Advisor: Professor Thomas Kinstle.",
+      "year": ""
+    },
+    {
+      "degree": "B.S., Chemistry (First Class)",
+      "institution": "Sri Lanka",
+      "detail": "",
+      "year": ""
+    }
   ],
   "career": [
-    { "years": "2019 – present", "role": "Founder and Chief Executive Officer", "org": "TCG GreenChem, Inc.", "place": "Richmond, Virginia", "detail": "Also Chief Scientific Officer of TCG Lifesciences Pvt. Ltd." },
-    { "years": "2018 – 2019", "role": "Chief Executive Officer", "org": "AstaTech (Chengdu) BioPharmaceutical Corporation", "place": "", "detail": "Founded AstaGreen Chem, Inc., Richmond, Virginia." },
-    { "years": "2002 – 2018", "role": "Vice President, Chemical Development", "org": "Boehringer Ingelheim Pharmaceuticals, Inc.", "place": "Ridgefield, Connecticut", "detail": "Led chemical development for clinical and commercial APIs, including Jardiance." },
-    { "years": "", "role": "Process Research and Development", "org": "Sepracor, Inc.", "place": "Marlborough, Massachusetts", "detail": "Lunesta, formoterol and desvenlafaxine." },
-    { "years": "", "role": "Process Research", "org": "Merck & Co.", "place": "Rahway, New Jersey", "detail": "Contributed to the development of Crixivan (indinavir)." },
-    { "years": "", "role": "Research Chemist", "org": "Dow Chemical Company", "place": "", "detail": "" }
+    {
+      "years": "2019 – present",
+      "role": "Founder and Chief Executive Officer",
+      "org": "TCG GreenChem, Inc.",
+      "place": "Richmond, Virginia",
+      "detail": "Also Chief Scientific Officer of TCG Lifesciences Pvt. Ltd."
+    },
+    {
+      "years": "2018 – 2019",
+      "role": "Chief Executive Officer",
+      "org": "AstaTech (Chengdu) BioPharmaceutical Corp.",
+      "place": "",
+      "detail": "Founded AstaGreen Chem, Inc., Richmond, Virginia."
+    },
+    {
+      "years": "2002 – 2018",
+      "role": "Vice President, Chemical Development",
+      "org": "Boehringer Ingelheim Pharmaceuticals",
+      "place": "Ridgefield, Connecticut",
+      "detail": "Led chemical development for clinical and commercial APIs, including Jardiance."
+    },
+    {
+      "years": "1996 – 2002",
+      "role": "Director, Process Research and Development",
+      "org": "Sepracor, Inc.",
+      "place": "Marlborough, Massachusetts",
+      "detail": "Lunesta, arformoterol and desvenlafaxine."
+    },
+    {
+      "years": "1990 – 1996",
+      "role": "Process Research",
+      "org": "Merck & Co.",
+      "place": "Rahway, New Jersey",
+      "detail": "Development of Crixivan (indinavir)."
+    },
+    {
+      "years": "1987 – 1990",
+      "role": "Research Chemist",
+      "org": "Dow Chemical Company",
+      "place": "",
+      "detail": ""
+    },
+    {
+      "years": "1987",
+      "role": "Ph.D., Organic Chemistry",
+      "org": "Wayne State University",
+      "place": "Detroit, Michigan",
+      "detail": "With Professor James H. Rigby."
+    }
   ],
   "medicines": [
-    { "name": "Crixivan", "generic": "indinavir", "company": "Merck", "area": "HIV" },
-    { "name": "Lunesta", "generic": "eszopiclone", "company": "Sepracor", "area": "Insomnia" },
-    { "name": "Jardiance", "generic": "empagliflozin", "company": "Boehringer Ingelheim", "area": "Type 2 diabetes, heart failure" },
-    { "name": "Formoterol", "generic": "arformoterol", "company": "Sepracor", "area": "COPD, asthma" },
-    { "name": "Desvenlafaxine", "generic": "desvenlafaxine", "company": "Sepracor / Wyeth", "area": "Depression" }
+    {
+      "name": "Crixivan",
+      "generic": "indinavir sulfate",
+      "company": "Merck",
+      "year": "1996",
+      "area": "HIV/AIDS",
+      "structure": "/molecules/indinavir.svg",
+      "contribution": "Developed the practical asymmetric synthesis of cis-1-amino-2-indanol, the chiral building block that made one of the first HIV protease inhibitors manufacturable at scale."
+    },
+    {
+      "name": "Lunesta",
+      "generic": "eszopiclone",
+      "company": "Sepracor",
+      "year": "2004",
+      "area": "Insomnia",
+      "structure": "/molecules/eszopiclone.svg",
+      "contribution": "Led process development for the single-enantiomer sleep medicine, delivering a scalable route to the active (S)-isomer."
+    },
+    {
+      "name": "Brovana",
+      "generic": "arformoterol",
+      "company": "Sepracor",
+      "year": "2006",
+      "area": "COPD",
+      "structure": "/molecules/formoterol.svg",
+      "contribution": "Process chemistry for the single-isomer (R,R)-formoterol bronchodilator."
+    },
+    {
+      "name": "Pristiq",
+      "generic": "desvenlafaxine",
+      "company": "Wyeth / Sepracor",
+      "year": "2008",
+      "area": "Major depressive disorder",
+      "structure": "/molecules/desvenlafaxine.svg",
+      "contribution": "Contributed to the process development of the active metabolite of venlafaxine as a medicine in its own right."
+    },
+    {
+      "name": "Jardiance",
+      "generic": "empagliflozin",
+      "company": "Boehringer Ingelheim / Lilly",
+      "year": "2014",
+      "area": "Type 2 diabetes · Heart failure",
+      "structure": "/molecules/empagliflozin.svg",
+      "contribution": "As VP of Chemical Development, led the chemistry organisation that delivered the commercial manufacturing route for the SGLT2 inhibitor."
+    }
   ],
   "awards": [
-    { "year": "2022", "title": "CEO Awards (two categories)", "org": "Business Worldwide Magazine", "detail": "Recognising leadership of TCG GreenChem." },
-    { "year": "2010", "title": "Siegfried Gold Medal", "org": "Siegfried AG", "detail": "For the development of practical processes for active pharmaceutical ingredients and contributions to process chemistry." }
+    {
+      "year": "2022",
+      "title": "CEO Awards (two categories)",
+      "org": "Business Worldwide Magazine",
+      "detail": "Recognising leadership of TCG GreenChem."
+    },
+    {
+      "year": "2010",
+      "title": "Siegfried Gold Medal",
+      "org": "Siegfried AG",
+      "detail": "For the development of practical processes for active pharmaceutical ingredients and contributions to process chemistry."
+    }
   ],
   "editorial": [
     "Editorial Advisory Board, Organic Process Research & Development (ACS)",
@@ -57,9 +177,80 @@
     "Editorial Board, Advanced Synthesis & Catalysis"
   ],
   "research": [
-    { "title": "Practical asymmetric synthesis", "text": "Scalable catalytic and stoichiometric methods for setting stereocentres in drug candidates, including chiral sulfinamide chemistry and asymmetric hydrogenation." },
-    { "title": "Process development for APIs", "text": "Route design, optimisation and scale-up of manufacturing processes for clinical and commercial active pharmaceutical ingredients." },
-    { "title": "Green and sustainable chemistry", "text": "Reducing waste, solvent use and cost through catalysis, telescoped steps and environmentally benign reagents." },
-    { "title": "Catalysis and new reagents", "text": "Transition-metal catalysed cross-coupling, C–H functionalisation and the design of ligands and reagents that make difficult transformations practical at scale." }
-  ]
+    {
+      "slug": "asymmetric-synthesis",
+      "title": "Practical asymmetric synthesis",
+      "short": "Setting stereocentres at scale.",
+      "text": "Chiral amines, alcohols and sulfoxides are the backbone of modern medicines. His group developed general, low-cost methods for making them in enantiopure form, including the modular tert-butanesulfinamide and related sulfinyl auxiliaries and the cis-1-amino-2-indanol platform behind Crixivan.",
+      "tags": [
+        "sulfinamides",
+        "aminoindanol",
+        "chiral auxiliaries",
+        "dynamic kinetic resolution"
+      ],
+      "query": "sulfin"
+    },
+    {
+      "slug": "catalysis",
+      "title": "Catalysis and ligand design",
+      "short": "Ligands that make hard reactions practical.",
+      "text": "The P-chiral BIBOP and dihydrobenzooxaphosphole ligand families enabled asymmetric hydrogenations, Suzuki–Miyaura couplings and C–H functionalisations robust enough for manufacturing, along with nickel, copper and rhodium catalysed methods for building quaternary and atropisomeric stereocentres.",
+      "tags": [
+        "P-chiral ligands",
+        "asymmetric hydrogenation",
+        "cross-coupling",
+        "C–H activation"
+      ],
+      "query": "ligand"
+    },
+    {
+      "slug": "process-development",
+      "title": "Process development for APIs",
+      "short": "From milligrams to metric tonnes.",
+      "text": "Route selection, optimisation, impurity control and scale-up for active pharmaceutical ingredients across HIV, CNS, respiratory and metabolic disease, taking candidates from first-in-human supplies through commercial launch.",
+      "tags": [
+        "route design",
+        "scale-up",
+        "impurity control",
+        "commercial launch"
+      ],
+      "query": "process"
+    },
+    {
+      "slug": "green-chemistry",
+      "title": "Green and sustainable chemistry",
+      "short": "Fewer steps, less waste, lower cost.",
+      "text": "TCG GreenChem was founded on the principle that the most sustainable process is also the most economical one. Catalysis over stoichiometric reagents, telescoped steps over isolations, and benign solvents over chlorinated ones, applied to real manufacturing problems.",
+      "tags": [
+        "catalysis",
+        "telescoping",
+        "solvent selection",
+        "E-factor"
+      ],
+      "query": "catal"
+    }
+  ],
+  "facts": [
+    {
+      "label": "Born",
+      "value": "Sri Lanka"
+    },
+    {
+      "label": "Ph.D.",
+      "value": "Wayne State University, 1987"
+    },
+    {
+      "label": "Current role",
+      "value": "Founder & CEO, TCG GreenChem"
+    },
+    {
+      "label": "Based in",
+      "value": "Richmond, Virginia"
+    },
+    {
+      "label": "Field",
+      "value": "Process chemistry · Asymmetric synthesis · Green chemistry"
+    }
+  ],
+  "philosophy": "The best process is the one a plant can run safely, every day, at the lowest cost to the patient and the planet."
 }

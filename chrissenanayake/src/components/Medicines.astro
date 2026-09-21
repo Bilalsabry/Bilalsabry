@@ -1,0 +1,21 @@
+---
+import { readFileSync } from 'node:fs';
+import profile from '../data/profile.json';
+const svg = (path: string) => readFileSync(new URL('../../public' + path, import.meta.url), 'utf8')
+  .replace(/<\?xml[^>]*>/, '')
+  .replace(/width='\d+px' height='\d+px'/, "width='100%' height='auto'")
+  .replace('<svg', '<svg role="img" aria-hidden="true" focusable="false"');
+---
+<div class="med-grid">
+  {profile.medicines.map((m) => (
+    <article class="med reveal">
+      <div class="structure" title={`Structure of ${m.generic}`} set:html={svg(m.structure)} />
+      <div class="body">
+        <div class="top"><h3>{m.name}</h3><span class="year">{m.year}</span></div>
+        <div class="generic">{m.generic}</div>
+        <div class="meta">{m.company} · {m.area}</div>
+        <p class="contribution">{m.contribution}</p>
+      </div>
+    </article>
+  ))}
+</div>

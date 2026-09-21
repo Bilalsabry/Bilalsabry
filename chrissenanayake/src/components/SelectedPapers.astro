@@ -1,0 +1,17 @@
+---
+import pubs from '../data/publications.json';
+interface Pub { doi?: string | null; pmid?: string; title: string; journal: string; year: number; selected?: boolean; note?: string; authors: string[]; }
+const sel = (pubs as Pub[]).filter((p) => p.selected).sort((a, b) => b.year - a.year);
+const link = (p: Pub) => (p.doi ? `https://doi.org/${p.doi}` : p.pmid ? `https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/` : '#');
+const first = (p: Pub) => p.authors[0]?.replace(/^[A-Z]+ /, '') ?? '';
+---
+<div class="sel-grid">
+  {sel.map((p) => (
+    <article class="sel reveal">
+      <div class="journal">{p.journal} · {p.year}</div>
+      <div class="title"><a href={link(p)} rel="noopener">{p.title}</a></div>
+      {p.note && <p class="note" style="margin:0">{p.note}</p>}
+      <div class="foot"><span>{first(p)} et al.</span><a href={link(p)} rel="noopener">Read →</a></div>
+    </article>
+  ))}
+</div>

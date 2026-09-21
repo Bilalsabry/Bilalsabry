@@ -3,7 +3,7 @@ import pubs from '../data/publications.json';
 
 interface Pub {
   pmid?: string; doi?: string | null; title: string; authors: string[]; journal: string;
-  year: number; volume?: string | null; issue?: string | null; pages?: string | null; selected?: boolean;
+  year: number; volume?: string | null; issue?: string | null; pages?: string | null; selected?: boolean; note?: string; pdf?: string;
 }
 interface Props { limit?: number; interactive?: boolean; }
 const { limit, interactive = true } = Astro.props;
@@ -11,7 +11,16 @@ const { limit, interactive = true } = Astro.props;
 const all = (pubs as Pub[]).slice().sort((a, b) => b.year - a.year || a.title.localeCompare(b.title));
 const list = limit ? all.slice(0, limit) : all;
 const years = [...new Set(all.map((p) => p.year))].sort((a, b) => b - a);
+const journals = [...new Set(all.map((p) => p.journal))].sort();
 
+const abbr: Record<string, string> = {
+  'Organic Letters': 'Org. Lett.', 'The Journal of Organic Chemistry': 'J. Org. Chem.', 'Journal of the American Chemical Society': 'JACS',
+  'Angewandte Chemie International Edition': 'Angew. Chem.', 'Chemical Science': 'Chem. Sci.', 'Chemical Reviews': 'Chem. Rev.',
+  'Accounts of Chemical Research': 'Acc. Chem. Res.', 'Chemical Society Reviews': 'Chem. Soc. Rev.', 'Organic Process Research & Development': 'OPR&D',
+  'Journal of Labelled Compounds & Radiopharmaceuticals': 'J. Label. Compd.', 'ACS Catalysis': 'ACS Catal.', 'Chemistry – A European Journal': 'Chem. Eur. J.',
+  'Synlett : Accounts and Rapid Communications in Synthetic Organic Chemistry': 'Synlett', 'Magnetic Resonance in Chemistry : MRC': 'Magn. Reson. Chem.',
+};
+const short = (j: string) => abbr[j] ?? j;
 const isHim = (a: string) => /senanayake/i.test(a);
 const venue = (p: Pub) => {
   let s = '';
@@ -21,8 +30,9 @@ const venue = (p: Pub) => {
   return s;
 };
 const link = (p: Pub) => (p.doi ? `https://doi.org/${p.doi}` : p.pmid ? `https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/` : undefined);
+const citation = (p: Pub) => `${p.authors.join(', ')}. ${p.title}. ${p.journal} ${p.year}${venue(p) ? ', ' + venue(p) : ''}.${p.doi ? ' https://doi.org/' + p.doi : ''}`;
+const MAX_AUTHORS = 6;
 
-// Group by year for the full list
 const byYear = new Map<number, Pub[]>();
 for (const p of list) byYear.set(p.year, [...(byYear.get(p.year) ?? []), p]);
 ---
@@ -33,30 +43,48 @@ for (const p of list) byYear.set(p.year, [...(byYear.get(p.year) ?? []), p]);
       <option value="">All years</option>
       {years.map((y) => <option value={y}>{y}</option>)}
     </select>
-    <select id="pub-sort" aria-label="Sort">
-      <option value="new">Newest first</option>
-      <option value="old">Oldest first</option>
+    <select id="pub-journal" aria-label="Filter by journal">
+      <option value="">All journals</option>
+      {journals.map((j) => <option value={j}>{short(j)}</option>)}
     </select>
+    <label class="toggle"><input type="checkbox" id="pub-sel" /> Selected only</label>
   </div>
 )}
-{interactive && <div class="pub-count" id="pub-count">{all.length} publications</div>}
+{interactive && (
+  <>
+    <div class="pub-count" id="pub-count">{all.length} publications indexed</div>
+    <nav class="year-jump" aria-label="Jump to year">{years.map((y) => <a href={`#y${y}`}>{y}</a>)}</nav>
+  </>
+)}
 
 <div id="pub-list" data-total={all.length}>
   {[...byYear.entries()].map(([year, items]) => (
     <section class="pub-group" data-year={year}>
-      {!limit && <h2 class="pub-year">{year}</h2>}
+      {!limit && <h2 class="pub-year" id={`y${year}`}>{year}</h2>}
       {items.map((p) => (
-        <article class="pub" data-year={p.year} data-text={`${p.title} ${p.authors.join(' ')} ${p.journal}`.toLowerCase()}>
-          <div class="title">{link(p) ? <a href={link(p)} rel="noopener">{p.title}</a> : p.title}</div>
-          <div class="authors">
-            {p.authors.map((a, i) => (
-              <>{isHim(a) ? <b>{a}</b> : a}{i < p.authors.length - 1 ? ', ' : ''}</>
-            ))}
+        <article class="pub" data-year={p.year} data-journal={p.journal} data-selected={p.selected ? '1' : '0'} data-text={`${p.title} ${p.authors.join(' ')} ${p.journal}`.toLowerCase()} data-cite={citation(p)}>
+          <div>
+            <div class="title">{link(p) ? <a href={link(p)} rel="noopener">{p.title}</a> : p.title}</div>
+            <div class="authors">
+              {p.authors.length > MAX_AUTHORS ? (
+                <>
+                  <span class="short">{p.authors.slice(0, 3).map((a, i) => <>{isHim(a) ? <b>{a}</b> : a}, </>)}… {isHim(p.authors[p.authors.length - 1]) ? <b>{p.authors[p.authors.length - 1]}</b> : p.authors[p.authors.length - 1]} <button type="button" data-expand>+{p.authors.length - 4} more</button></span>
+                  <span class="full" hidden>{p.authors.map((a, i) => <>{isHim(a) ? <b>{a}</b> : a}{i < p.authors.length - 1 ? ', ' : ''}</>)}</span>
+                </>
+              ) : (
+                p.authors.map((a, i) => <>{isHim(a) ? <b>{a}</b> : a}{i < p.authors.length - 1 ? ', ' : ''}</>)
+              )}
+            </div>
+            <div class="venue"><em>{p.journal}</em>{' '}{p.year}{venue(p) ? `, ${venue(p)}` : ''}</div>
           </div>
-          <div class="venue"><em>{p.journal}</em>{" "}{p.year}{venue(p) ? `, ${venue(p)}` : ''}</div>
-          <div class="links">
-            {p.doi && <a href={`https://doi.org/${p.doi}`} rel="noopener">DOI</a>}
-            {p.pmid && <a href={`https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/`} rel="noopener">PubMed</a>}
+          <div class="side">
+            {p.selected ? <span class="badge star">Selected</span> : <span class="badge">{short(p.journal)}</span>}
+            <div class="links">
+              {p.doi && <a href={`https://doi.org/${p.doi}`} rel="noopener">DOI</a>}
+              {p.pmid && <a href={`https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/`} rel="noopener">PubMed</a>}
+              {p.pdf && <a href={p.pdf} rel="noopener">PDF</a>}
+              {interactive && <button type="button" data-cite-btn>Cite</button>}
+            </div>
           </div>
         </article>
       ))}
@@ -65,11 +93,27 @@ for (const p of list) byYear.set(p.year, [...(byYear.get(p.year) ?? []), p]);
   {interactive && <div class="empty" id="pub-empty" hidden>No publications match your search.</div>}
 </div>
 
+<script>
+  document.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    if (t.matches('[data-expand]')) {
+      const a = t.closest('.authors')!;
+      a.querySelector<HTMLElement>('.short')!.hidden = true;
+      a.querySelector<HTMLElement>('.full')!.hidden = false;
+    }
+    if (t.matches('[data-cite-btn]')) {
+      const cite = t.closest<HTMLElement>('.pub')!.dataset.cite ?? '';
+      navigator.clipboard?.writeText(cite).then(() => { t.textContent = 'Copied'; setTimeout(() => (t.textContent = 'Cite'), 1500); });
+    }
+  });
+</script>
+
 {interactive && (
   <script>
     const q = document.getElementById('pub-q') as HTMLInputElement;
     const yearSel = document.getElementById('pub-year') as HTMLSelectElement;
-    const sortSel = document.getElementById('pub-sort') as HTMLSelectElement;
+    const jSel = document.getElementById('pub-journal') as HTMLSelectElement;
+    const selOnly = document.getElementById('pub-sel') as HTMLInputElement;
     const list = document.getElementById('pub-list')!;
     const count = document.getElementById('pub-count')!;
     const empty = document.getElementById('pub-empty')!;
@@ -78,30 +122,28 @@ for (const p of list) byYear.set(p.year, [...(byYear.get(p.year) ?? []), p]);
 
     function apply() {
       const term = q.value.trim().toLowerCase();
-      const year = yearSel.value;
+      const year = yearSel.value, journal = jSel.value, sel = selOnly.checked;
       let shown = 0;
       for (const g of groups) {
         let visible = 0;
         for (const p of g.querySelectorAll<HTMLElement>('.pub')) {
-          const ok = (!year || p.dataset.year === year) && (!term || (p.dataset.text ?? '').includes(term));
-          p.hidden = !ok;
-          if (ok) visible++;
+          const ok = (!year || p.dataset.year === year) && (!journal || p.dataset.journal === journal) && (!sel || p.dataset.selected === '1') && (!term || (p.dataset.text ?? '').includes(term));
+          p.hidden = !ok; if (ok) visible++;
         }
-        g.hidden = visible === 0;
-        shown += visible;
+        g.hidden = visible === 0; shown += visible;
       }
-      count.textContent = shown === total ? `${total} publications` : `${shown} of ${total} publications`;
+      count.textContent = shown === total ? `${total} publications indexed` : `${shown} of ${total} publications`;
       empty.hidden = shown !== 0;
+      const params = new URLSearchParams();
+      if (term) params.set('q', term); if (year) params.set('year', year); if (journal) params.set('journal', journal); if (sel) params.set('selected', '1');
+      history.replaceState(null, '', params.toString() ? `?${params}` : location.pathname);
     }
-    function sort() {
-      const asc = sortSel.value === 'old';
-      groups.sort((a, b) => (asc ? 1 : -1) * (Number(a.dataset.year) - Number(b.dataset.year)));
-      for (const g of groups) list.insertBefore(g, empty);
-    }
-    q.addEventListener('input', apply);
-    yearSel.addEventListener('change', apply);
-    sortSel.addEventListener('change', sort);
+    q.addEventListener('input', apply); yearSel.addEventListener('change', apply); jSel.addEventListener('change', apply); selOnly.addEventListener('change', apply);
     const params = new URLSearchParams(location.search);
-    if (params.get('q')) { q.value = params.get('q')!; apply(); }
+    if (params.get('q')) q.value = params.get('q')!;
+    if (params.get('year')) yearSel.value = params.get('year')!;
+    if (params.get('journal')) jSel.value = params.get('journal')!;
+    if (params.get('selected')) selOnly.checked = true;
+    if ([...params.keys()].length) apply();
   </script>
 )}

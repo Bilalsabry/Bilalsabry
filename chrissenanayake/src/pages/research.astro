@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import profile from '../data/profile.json';
+---
+<Base title="Research" description="Research themes of Dr. Chris H. Senanayake: practical asymmetric synthesis, catalysis and ligand design, process development for APIs, and green chemistry.">
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Research</span>
+      <h1>Four threads, one goal</h1>
+      <p class="lede">Every method his teams invented was judged by the same test: can a manufacturing plant run it, safely, at a cost patients can bear.</p>
+    </div>
+  </section>
+  <section class="container" style="padding-bottom: clamp(3rem, 7vw, 6rem)">
+    {profile.research.map((r, i) => (
+      <article class="thrust reveal" id={r.slug}>
+        <div>
+          <div class="num">0{i + 1}</div>
+          <h2>{r.title}</h2>
+          <p class="short">{r.short}</p>
+        </div>
+        <div>
+          <p style="font-size:1.06rem">{r.text}</p>
+          <div class="tags">{r.tags.map((t) => <span class="tag">{t}</span>)}</div>
+          <p style="margin-top:1.2rem"><a href={`/publications?q=${encodeURIComponent(r.query)}`}>Related publications →</a></p>
+        </div>
+      </article>
+    ))}
+  </section>
+</Base>

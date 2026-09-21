@@ -4,30 +4,34 @@ import profile from '../data/profile.json';
 ---
 <Base title="Awards" description="Awards, honours and editorial service of Dr. Chris H. Senanayake.">
   <section class="section">
-    <div class="container">
-      <span class="eyebrow">Recognition</span>
-      <h1>Awards and honours</h1>
-      <div style="margin-top:1.5rem; max-width: 800px">
-        {profile.awards.map((a) => (
-          <div class="award">
-            <div class="year">{a.year}</div>
-            <div>
-              <div class="title">{a.title}</div>
-              <div class="org">{a.org}</div>
-              {a.detail && <div class="detail">{a.detail}</div>}
+    <div class="container two-col" style="align-items:start">
+      <div>
+        <span class="eyebrow">Recognition</span>
+        <h1>Awards and honours</h1>
+        <div style="margin-top:1.5rem">
+          {profile.awards.map((a) => (
+            <div class="award reveal">
+              <div class="year">{a.year}</div>
+              <div>
+                <div class="title">{a.title}</div>
+                <div class="org">{a.org}</div>
+                {a.detail && <div class="detail">{a.detail}</div>}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-  <section class="section">
-    <div class="container">
-      <span class="eyebrow">Service</span>
-      <h2>Editorial boards</h2>
-      <ul style="padding-left:1.2rem; color: var(--ink-2); max-width: 800px">
-        {profile.editorial.map((e) => <li style="margin-bottom:.4rem">{e}</li>)}
-      </ul>
+      <div>
+        <span class="eyebrow">Service</span>
+        <h2>Editorial boards</h2>
+        <ul style="padding-left:1.2rem; color: var(--ink-2)">
+          {profile.editorial.map((e) => <li style="margin-bottom:.5rem">{e}</li>)}
+        </ul>
+        <div class="card" style="margin-top:2rem">
+          <div class="eyebrow">By the numbers</div>
+          {profile.stats.map((s) => <div style="display:flex;justify-content:space-between;gap:1rem;padding:.5rem 0;border-top:1px solid var(--line)"><span class="muted">{s.label}</span><b>{s.value}</b></div>)}
+        </div>
+      </div>
     </div>
   </section>
 </Base>

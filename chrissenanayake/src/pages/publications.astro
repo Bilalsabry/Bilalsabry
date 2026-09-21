@@ -1,13 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import PubList from '../components/PubList.astro';
+import profile from '../data/profile.json';
 ---
 <Base title="Publications" description="Peer-reviewed publications by Dr. Chris H. Senanayake, searchable by title, author, journal and year.">
-  <section class="section">
+  <section class="section" style="padding-bottom:0">
     <div class="container">
       <span class="eyebrow">Publications</span>
       <h1>Publications</h1>
-      <p class="lede">Peer-reviewed papers, reviews and book chapters. Each entry links to the publisher's page via its DOI.</p>
+      <p class="lede">Co-author of more than 500 papers, patents, book chapters and reviews. The list below covers the peer-reviewed papers indexed to date; each entry links to the publisher via its DOI. Full record on <a href={profile.links.scholar} rel="noopener">Google Scholar</a>.</p>
       <PubList />
     </div>
   </section>
