@@ -46,6 +46,7 @@ export const sections: Section[] = [
         id: "clerqai",
         title: "ClerqAI",
         note: "In progress.",
+        href: "https://www.clerqai.org/",
       },
       {
         id: "evidence",
