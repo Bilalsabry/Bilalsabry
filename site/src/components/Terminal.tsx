@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { profile, sections as dataSections } from "@/lib/data";
 import { copyText, openExternal, scrollToId, sections } from "@/lib/actions";
 import { setTheme, resolvedTheme } from "@/lib/theme";
+import { downloadVCard } from "@/lib/vcard";
 import { toast } from "./Toast";
 
 type Line = { kind: "in" | "out" | "err" | "sys"; text: string };
@@ -34,6 +35,7 @@ const HELP = [
   "  open <thing>      linkedin · krux · clerqai · berkeley",
   "  theme <mode>      light · dark · system",
   "  email             copy my email address",
+  "  vcard             download my contact card",
   "  neofetch          system info, sort of",
   "  date              current time, my timezone",
   "  clear             wipe the screen",
@@ -145,6 +147,11 @@ export default function Terminal() {
           if (ok) toast("Email copied");
           break;
         }
+        case "vcard":
+        case "contact":
+          downloadVCard();
+          print("sys", "downloading Bilal-Sabry.vcf");
+          break;
         case "neofetch":
         case "fetch":
           print("out", [...BANNER, "", ...neofetch()]);

@@ -10,8 +10,8 @@ export default function Home() {
       <TopBar />
       <main>
         <Intro />
-        {sections.map((s, i) => (
-          <Rows key={s.id} section={s} index={i} />
+        {sections.map((s) => (
+          <Rows key={s.id} section={s} />
         ))}
       </main>
       <Footer />

@@ -1,14 +1,12 @@
 "use client";
 
-import Reveal from "./Reveal";
 import type { Section } from "@/lib/data";
 
 /** A labelled list: title on the left, one quiet line on the right. */
-export default function Rows({ section, index }: { section: Section; index: number }) {
+export default function Rows({ section }: { section: Section }) {
   return (
     <section id={section.id} style={{ padding: "clamp(18px, 3vh, 28px) 0" }}>
       <div className="wrap">
-        <Reveal delay={index * 60}>
           <div
             className="rows-grid"
             style={{
@@ -71,7 +69,6 @@ export default function Rows({ section, index }: { section: Section; index: numb
               })}
             </div>
           </div>
-        </Reveal>
       </div>
       <style>{`
         .row:hover .row-arrow{ transform: translate(2px,-2px); color: var(--accent); }

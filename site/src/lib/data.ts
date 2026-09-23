@@ -7,6 +7,7 @@ export const profile = {
   location: "New York, NY",
   timeZone: "America/New_York",
   email: "bilal@berkeley.edu",
+  phone: "+16096335975", // only inside the downloadable contact card, never shown on the page
   links: {
     linkedin: "https://linkedin.com/in/bilal-sabry",
   },

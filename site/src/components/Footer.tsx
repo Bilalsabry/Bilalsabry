@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { profile } from "@/lib/data";
 import { copyText } from "@/lib/actions";
+import { downloadVCard } from "@/lib/vcard";
 import { toast } from "./Toast";
 
 export default function Footer() {
@@ -59,6 +60,18 @@ export default function Footer() {
             <a href={profile.links.linkedin} target="_blank" rel="noreferrer" className="link">
               LinkedIn
             </a>
+            <button
+              type="button"
+              onClick={() => {
+                downloadVCard();
+                toast("Contact card saved");
+              }}
+              className="link"
+              style={{ background: "none", border: 0, padding: 0, font: "inherit", cursor: "pointer" }}
+              title="Download a contact card (.vcf)"
+            >
+              Save contact
+            </button>
           </div>
         </div>
 

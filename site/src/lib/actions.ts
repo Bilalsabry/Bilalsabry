@@ -5,6 +5,7 @@
 
 import { profile, sections as dataSections } from "./data";
 import { toggleTheme, setTheme } from "./theme";
+import { downloadVCard } from "./vcard";
 
 export type Action = {
   id: string;
@@ -66,6 +67,17 @@ export function buildActions(onToast: (m: string) => void): Action[] {
       run: async () => {
         const ok = await copyText(profile.email);
         onToast(ok ? "Email copied" : "Couldn’t copy — " + profile.email);
+      },
+    },
+    {
+      id: "vcard",
+      label: "Save contact card",
+      hint: ".vcf",
+      keywords: "vcard phone number address book download",
+      group: "Connect",
+      run: () => {
+        downloadVCard();
+        onToast("Contact card saved");
       },
     },
     {

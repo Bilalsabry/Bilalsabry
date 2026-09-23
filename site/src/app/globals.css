@@ -182,12 +182,6 @@ html {
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* Scroll-reveal hidden state (JS clears it) */
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(14px);
-}
-
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -197,10 +191,6 @@ html {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-  [data-reveal] {
-    opacity: 1 !important;
-    transform: none !important;
   }
   * {
     animation-duration: 0.001s !important;
@@ -220,10 +210,6 @@ html {
   [role="dialog"],
   .no-print {
     display: none !important;
-  }
-  [data-reveal] {
-    opacity: 1 !important;
-    transform: none !important;
   }
   section {
     padding: 24px 0 !important;
