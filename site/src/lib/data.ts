@@ -44,8 +44,8 @@ export const sections: Section[] = [
       },
       {
         id: "clerqai",
-        title: "ClerqAI",
-        note: "In progress.",
+        title: "Clerq AI",
+        note: "Legal document automation for law firms in Sri Lanka. A client’s filing in, a filable draft out.",
         href: "https://www.clerqai.org/",
       },
       {

@@ -29,7 +29,7 @@ const serif = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Bilal Sabry",
   description:
-    "Finance, strategy, AI, and everything in between. Strategic Projects & Finance Lead at TCG GreenChem; building Krux and ClerqAI. UC Berkeley Economics.",
+    "Finance, strategy, AI, and everything in between. Strategic Projects & Finance Lead at TCG GreenChem; building Krux and Clerq AI. UC Berkeley Economics.",
   metadataBase: new URL("https://bilalsabry.com"),
   alternates: { canonical: "/" },
   openGraph: {
