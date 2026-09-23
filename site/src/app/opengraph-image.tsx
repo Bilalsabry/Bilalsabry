@@ -28,9 +28,9 @@ export default function OpengraphImage() {
             Bilal Sabry
           </div>
           <div style={{ display: "flex", fontSize: 36, color: "#4d4c48" }}>
-            I solve problems&nbsp;
+            Building&nbsp;
             <span style={{ fontFamily: "serif", fontStyle: "italic", color: "#121212" }}>
-              by building things.
+              and learning.
             </span>
           </div>
         </div>
