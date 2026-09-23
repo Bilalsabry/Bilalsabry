@@ -21,7 +21,7 @@ export const profile = {
 export type Row = {
   id: string;
   title: string;
-  note: string;
+  note?: string;
   href?: string;
 };
 
@@ -51,8 +51,7 @@ export const sections: Section[] = [
       {
         id: "evidence",
         title: "evidence",
-        note: "Open-source research assistant in Rust. Local-first, every answer cited.",
-        href: "https://github.com/Bilalsabry/evidence",
+        note: "Open-source research assistant in Rust.",
       },
     ],
   },
@@ -63,7 +62,7 @@ export const sections: Section[] = [
       {
         id: "tcg",
         title: "TCG GreenChem",
-        note: "Strategic Projects & Finance Lead, reporting to the CEO. Princeton, NJ.",
+        note: "Strategy and finance in pharma.",
       },
     ],
   },
@@ -75,6 +74,11 @@ export const sections: Section[] = [
         id: "berkeley",
         title: "UC Berkeley",
         note: "B.A. Economics, minor in Data Science. Class of 2024.",
+      },
+      {
+        id: "royal",
+        title: "Royal College",
+        href: "https://royalcollege.lk",
       },
     ],
   },

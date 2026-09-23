@@ -29,7 +29,7 @@ export default function Rows({ section, index }: { section: Section; index: numb
                       {r.title}
                     </span>
                     <span style={{ color: "var(--fg-2)", fontSize: 15.5, lineHeight: 1.5 }}>
-                      {r.note}
+                      {r.note ?? ""}
                     </span>
                     <span
                       className="row-arrow"

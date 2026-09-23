@@ -19,7 +19,7 @@ const BANNER = [
 const FILES: Record<string, () => string[]> = Object.fromEntries(
   dataSections.map((s) => [
     `${s.id}.txt`,
-    () => s.rows.flatMap((r) => [`${r.title}`, `  ${r.note}`, r.href ? `  ${r.href}` : "", ""]),
+    () => s.rows.flatMap((r) => [`${r.title}`, r.note ? `  ${r.note}` : "", r.href ? `  ${r.href}` : "", ""].filter((l, i, a) => !(l === "" && a[i - 1] === ""))),
   ])
 );
 
@@ -30,7 +30,7 @@ const HELP = [
   "  ls                list files",
   "  cat <file>        read a file (try: cat building.txt)",
   "  go <section>      scroll to a section (" + sections.map((s) => s.id).join(", ") + ")",
-  "  open <thing>      linkedin · github · krux · clerqai · evidence",
+  "  open <thing>      linkedin · github · krux · clerqai",
   "  email             copy my email address",
   "  neofetch          system info, sort of",
   "  date              current time, my timezone",
@@ -57,7 +57,7 @@ function neofetch(): string[] {
     `-------------------`,
     `Base:      ${profile.location}`,
     `Day job:   ${rows.find((r) => r.id === "tcg")?.title} — ${rows.find((r) => r.id === "tcg")?.note}`,
-    `Building:  ${rows.filter((r) => r.href).map((r) => r.title).join(", ")}`,
+    `Building:  ${dataSections.find((s) => s.id === "building")?.rows.map((r) => r.title).join(", ")}`,
     `School:    UC Berkeley — Economics, minor in Data Science`,
     `Visitor:   ${os} · ${window.innerWidth}×${window.innerHeight} · ${
       Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -127,7 +127,6 @@ export default function Terminal() {
             github: profile.links.github,
             krux: dataSections.flatMap((s) => s.rows).find((r) => r.id === "krux")?.href ?? "",
             clerqai: dataSections.flatMap((s) => s.rows).find((r) => r.id === "clerqai")?.href ?? "",
-            evidence: dataSections.flatMap((s) => s.rows).find((r) => r.id === "evidence")?.href ?? "",
           };
           const url = map[arg];
           if (!url) print("err", `open: try one of ${Object.keys(map).join(", ")}`);

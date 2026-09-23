@@ -111,7 +111,7 @@ export function buildActions(onToast: (m: string) => void): Action[] {
       id: `open-${r.id}`,
       label: `Open ${r.title}`,
       hint: "↗",
-      keywords: r.note,
+      keywords: r.note ?? "",
       group: "Work" as const,
       run: () => openExternal(r.href!),
     }));
