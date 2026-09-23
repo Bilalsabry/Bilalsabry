@@ -4,6 +4,7 @@
 // ---------------------------------------------------------------------------
 
 import { profile, sections as dataSections } from "./data";
+import { toggleTheme, setTheme } from "./theme";
 
 export type Action = {
   id: string;
@@ -84,14 +85,6 @@ export function buildActions(onToast: (m: string) => void): Action[] {
       run: () => openExternal(profile.links.linkedin),
     },
     {
-      id: "github",
-      label: "GitHub",
-      hint: "↗",
-      keywords: "code source repos",
-      group: "Connect",
-      run: () => openExternal(profile.links.github),
-    },
-    {
       id: "copy-url",
       label: "Copy link to this site",
       hint: "bilalsabry.com",
@@ -117,6 +110,21 @@ export function buildActions(onToast: (m: string) => void): Action[] {
     }));
 
   const fun: Action[] = [
+    {
+      id: "theme",
+      label: "Toggle dark mode",
+      hint: "light / dark",
+      keywords: "theme appearance color scheme night",
+      group: "Fun",
+      run: () => toggleTheme(),
+    },
+    {
+      id: "theme-system",
+      label: "Follow system theme",
+      keywords: "theme appearance auto reset",
+      group: "Fun",
+      run: () => setTheme("system"),
+    },
     {
       id: "terminal",
       label: "Open terminal",

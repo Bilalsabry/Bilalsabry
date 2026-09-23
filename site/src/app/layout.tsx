@@ -5,6 +5,7 @@ import CommandPalette from "@/components/CommandPalette";
 import Terminal from "@/components/Terminal";
 import Toast from "@/components/Toast";
 import { profile } from "@/lib/data";
+import { THEME_BOOT_SCRIPT } from "@/lib/theme";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -58,7 +59,7 @@ const jsonLd = {
   worksFor: { "@type": "Organization", name: "TCG GreenChem" },
   alumniOf: { "@type": "CollegeOrUniversity", name: "UC Berkeley" },
   address: { "@type": "PostalAddress", addressLocality: "New York", addressRegion: "NY" },
-  sameAs: [profile.links.linkedin, profile.links.github],
+  sameAs: [profile.links.linkedin],
 };
 
 export default function RootLayout({
@@ -67,8 +68,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${inter.variable} ${mono.variable} ${serif.variable} antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
+      </head>
       <body>
         <script
           type="application/ld+json"

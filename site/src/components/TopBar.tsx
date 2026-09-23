@@ -2,6 +2,7 @@
 
 import LocalTime from "./LocalTime";
 import { profile } from "@/lib/data";
+import ThemeToggle from "./ThemeToggle";
 
 export default function TopBar() {
   return (
@@ -19,9 +20,10 @@ export default function TopBar() {
       <a href="#top" style={{ color: "var(--fg-2)" }}>
         BS<span style={{ color: "var(--accent)" }}>.</span>
       </a>
-      <span style={{ display: "inline-flex", gap: 14 }}>
+      <span style={{ display: "inline-flex", alignItems: "center", gap: 14 }}>
         <span className="hide-sm">{profile.location}</span>
         <LocalTime />
+        <ThemeToggle />
       </span>
       <style>{`@media (max-width: 480px){ .hide-sm{ display:none } }`}</style>
     </div>

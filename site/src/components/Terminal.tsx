@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { profile, sections as dataSections } from "@/lib/data";
 import { copyText, openExternal, scrollToId, sections } from "@/lib/actions";
+import { setTheme, resolvedTheme } from "@/lib/theme";
 import { toast } from "./Toast";
 
 type Line = { kind: "in" | "out" | "err" | "sys"; text: string };
@@ -30,7 +31,8 @@ const HELP = [
   "  ls                list files",
   "  cat <file>        read a file (try: cat building.txt)",
   "  go <section>      scroll to a section (" + sections.map((s) => s.id).join(", ") + ")",
-  "  open <thing>      linkedin · github · krux · clerqai",
+  "  open <thing>      linkedin · krux · clerqai · berkeley",
+  "  theme <mode>      light · dark · system",
   "  email             copy my email address",
   "  neofetch          system info, sort of",
   "  date              current time, my timezone",
@@ -124,9 +126,9 @@ export default function Terminal() {
         case "open": {
           const map: Record<string, string> = {
             linkedin: profile.links.linkedin,
-            github: profile.links.github,
             krux: dataSections.flatMap((s) => s.rows).find((r) => r.id === "krux")?.href ?? "",
             clerqai: dataSections.flatMap((s) => s.rows).find((r) => r.id === "clerqai")?.href ?? "",
+            berkeley: dataSections.flatMap((s) => s.rows).find((r) => r.id === "berkeley")?.href ?? "",
           };
           const url = map[arg];
           if (!url) print("err", `open: try one of ${Object.keys(map).join(", ")}`);
@@ -157,6 +159,15 @@ export default function Terminal() {
             })
           );
           break;
+        case "theme": {
+          if (arg === "light" || arg === "dark" || arg === "system") {
+            setTheme(arg);
+            print("sys", `theme → ${arg}`);
+          } else {
+            print("out", `current: ${resolvedTheme()}. usage: theme light|dark|system`);
+          }
+          break;
+        }
         case "clear":
           setLines([]);
           break;

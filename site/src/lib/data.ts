@@ -9,7 +9,6 @@ export const profile = {
   email: "bilal@berkeley.edu",
   links: {
     linkedin: "https://linkedin.com/in/bilal-sabry",
-    github: "https://github.com/Bilalsabry",
   },
   // One line under the name. The italic part is set in serif.
   intro: {
@@ -74,6 +73,7 @@ export const sections: Section[] = [
         id: "berkeley",
         title: "UC Berkeley",
         note: "B.A. Economics, minor in Data Science. Class of 2024.",
+        href: "https://www.berkeley.edu",
       },
       {
         id: "royal",

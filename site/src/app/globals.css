@@ -18,7 +18,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #0c0c0d;
     --bg-2: #141416;
     --fg: #f1efe9;
@@ -30,6 +30,19 @@
     --accent-soft: rgba(110, 240, 200, 0.1);
     color-scheme: dark;
   }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0c0c0d;
+  --bg-2: #141416;
+  --fg: #f1efe9;
+  --fg-2: #b3b0a8;
+  --fg-3: #77756f;
+  --line: rgba(241, 239, 233, 0.1);
+  --line-2: rgba(241, 239, 233, 0.24);
+  --accent: #6ef0c8;
+  --accent-soft: rgba(110, 240, 200, 0.1);
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -158,9 +171,15 @@ button {
   color: #fff;
 }
 @media (prefers-color-scheme: dark) {
-  .btn-primary:hover {
+  :root:not([data-theme="light"]) .btn-primary:hover {
     color: #0c0c0d;
   }
+}
+:root[data-theme="dark"] .btn-primary:hover {
+  color: #0c0c0d;
+}
+html {
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 /* Scroll-reveal hidden state (JS clears it) */

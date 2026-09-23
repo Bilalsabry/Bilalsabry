@@ -59,9 +59,6 @@ export default function Footer() {
             <a href={profile.links.linkedin} target="_blank" rel="noreferrer" className="link">
               LinkedIn
             </a>
-            <a href={profile.links.github} target="_blank" rel="noreferrer" className="link">
-              GitHub
-            </a>
           </div>
         </div>
 
