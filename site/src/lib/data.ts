@@ -13,8 +13,8 @@ export const profile = {
   },
   // One line under the name. The italic part is set in serif.
   intro: {
-    lead: "Finance and strategy by day.",
-    italic: "I build software on the side.",
+    lead: "Finance, strategy, AI,",
+    italic: "and everything in between.",
   },
 };
 

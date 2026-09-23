@@ -29,12 +29,12 @@ const serif = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Bilal Sabry",
   description:
-    "Finance and strategy by day. I build software on the side. Strategic Projects & Finance Lead at TCG GreenChem; building Krux and ClerqAI. UC Berkeley Economics.",
+    "Finance, strategy, AI, and everything in between. Strategic Projects & Finance Lead at TCG GreenChem; building Krux and ClerqAI. UC Berkeley Economics.",
   metadataBase: new URL("https://bilalsabry.com"),
   alternates: { canonical: "/" },
   openGraph: {
     title: "Bilal Sabry",
-    description: "Finance and strategy by day. I build software on the side.",
+    description: "Finance, strategy, AI, and everything in between.",
     type: "website",
     url: "https://bilalsabry.com",
     siteName: "Bilal Sabry",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Bilal Sabry",
-    description: "Finance and strategy by day. I build software on the side.",
+    description: "Finance, strategy, AI, and everything in between.",
   },
   robots: { index: true, follow: true },
 };
