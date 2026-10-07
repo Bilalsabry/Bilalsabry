@@ -1,0 +1,20 @@
+# Run without Docker: systemd service for a Linux server.
+# Install:  sudo cp deploy/pokealert.service /etc/systemd/system/
+#           sudo systemctl daemon-reload && sudo systemctl enable --now pokealert
+# Logs:     journalctl -u pokealert -f
+[Unit]
+Description=Pokémon TCG stock alerts
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pokealert
+WorkingDirectory=/opt/pokemon-stock-alerts
+EnvironmentFile=/opt/pokemon-stock-alerts/.env
+ExecStart=/opt/pokemon-stock-alerts/.venv/bin/python -m pokealert -c config.yaml run
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

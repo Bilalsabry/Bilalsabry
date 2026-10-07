@@ -1,0 +1,150 @@
+# Copy to config.yaml and edit. ${NAME} is read from the environment (.env file under Docker).
+#
+# Watch kinds:
+#   page     - one product page. Alerts when it becomes buyable (in stock or pre-order).
+#   listing  - a search or category page. Alerts when a NEW product matching your keywords appears.
+#   shopify  - any Shopify-based card shop. Reads the whole catalogue; alerts on new listings and restocks.
+#   bestbuy  - Best Buy's official API (free key). Alerts on new listings and restocks.
+#
+# After editing, run `python -m pokealert check` (or `docker compose run --rm pokealert check`)
+# to see exactly what each watch can see before leaving it running.
+
+settings:
+  default_interval: 90        # seconds between checks of each watch (minimum 30)
+  per_host_gap: 5             # seconds between any two requests to the same store
+  state_file: data/state.json
+  alert_cooldown: 600         # don't repeat the same alert for the same product within 10 min
+  failure_alert_after: 3      # push a warning after this many failed checks in a row
+  # bestbuy_api_key: ${BESTBUY_API_KEY}   # free from https://developer.bestbuy.com
+
+notify:
+  ntfy:
+    topic: ${NTFY_TOPIC}      # pick a long random name - anyone who knows it can read your alerts
+    # server: https://ntfy.sh # or your own ntfy server
+  # pushover:                 # optional second channel (one-off $5 app)
+  #   app_token: ${PUSHOVER_APP_TOKEN}
+  #   user_key: ${PUSHOVER_USER_KEY}
+
+# Words used to spot sealed TCG product. A listing matches if every word of ANY phrase is in its title.
+x-tcg-keywords: &tcg
+  - pokemon elite trainer box
+  - pokemon booster bundle
+  - pokemon booster box
+  - pokemon booster display
+  - pokemon collection box
+  - pokemon premium collection
+  - pokemon tin
+  - pokemon blister
+  - pokemon booster pack
+x-not-cards: &not_cards
+  - plush
+  - figure
+  - sleeves
+  - binder
+  - t shirt
+  - hoodie
+  - video game
+  - nintendo switch
+
+watches:
+  # ---------------------------------------------------------------- Pokémon Center
+  # Pokémon Center runs strong bot protection and builds pages with JavaScript, so it often
+  # blocks automated checks. render: true loads it in a real headless browser (needs the
+  # browser build, see README). If it still can't see the site you'll get a "Can't see" push.
+  - name: Pokémon Center US – TCG
+    kind: listing
+    url: https://www.pokemoncenter.com/category/trading-card-game
+    render: true
+    interval: 120
+    keywords: *tcg
+    exclude: *not_cards
+
+  - name: Pokémon Center UK – TCG
+    kind: listing
+    url: https://www.pokemoncenter.com/en-gb/category/trading-card-game
+    render: true
+    interval: 120
+    keywords: *tcg
+    exclude: *not_cards
+    enabled: false            # turn on if you're in the UK
+
+  # Paste a product page as soon as a pre-order is announced - this is the most reliable watch.
+  - name: Pokémon Center – (paste product)
+    kind: page
+    url: https://www.pokemoncenter.com/product/REPLACE-ME
+    render: true
+    interval: 60
+    enabled: false
+
+  # ---------------------------------------------------------------- Big US retailers
+  - name: Best Buy – Pokémon TCG
+    kind: bestbuy
+    keywords: [pokemon trading card]
+    exclude: *not_cards
+    interval: 120
+    enabled: false            # set settings.bestbuy_api_key, then enable
+
+  - name: Walmart – Pokémon cards search
+    kind: listing
+    url: https://www.walmart.com/search?q=pokemon+trading+cards&sort=new
+    keywords: *tcg
+    exclude: *not_cards
+    interval: 180
+
+  - name: Target – Pokémon cards search
+    kind: listing
+    url: https://www.target.com/s?searchTerm=pokemon+trading+cards&sortBy=newest
+    render: true
+    keywords: *tcg
+    exclude: *not_cards
+    interval: 180
+
+  - name: GameStop – Pokémon TCG search
+    kind: listing
+    url: https://www.gamestop.com/search/?q=pokemon+trading+card&srule=release-date
+    keywords: *tcg
+    exclude: *not_cards
+    interval: 180
+
+  - name: Barnes & Noble – Pokémon cards search
+    kind: listing
+    url: https://www.barnesandnoble.com/s/pokemon+trading+cards
+    keywords: *tcg
+    exclude: *not_cards
+    interval: 300
+
+  # A specific product at any store (Target, Walmart, GameStop, Costco, Amazon...):
+  - name: Target – (paste product)
+    kind: page
+    url: https://www.target.com/p/REPLACE-ME
+    render: true
+    enabled: false
+
+  # ---------------------------------------------------------------- UK retailers
+  - name: Smyths – Pokémon cards search
+    kind: listing
+    url: https://www.smythstoys.com/uk/en-gb/search?text=pokemon+trading+cards
+    keywords: *tcg
+    exclude: *not_cards
+    interval: 180
+    enabled: false
+
+  - name: Argos – Pokémon cards search
+    kind: listing
+    url: https://www.argos.co.uk/search/pokemon-cards/
+    keywords: *tcg
+    exclude: *not_cards
+    interval: 180
+    enabled: false
+
+  # ---------------------------------------------------------------- Independent card shops
+  # Most independent TCG shops run on Shopify. Check: open https://THE-SHOP/products.json in
+  # your browser - if you see product data, add the shop here. This is the most accurate watch.
+  - name: My local card shop
+    kind: shopify
+    url: https://REPLACE-WITH-SHOP-DOMAIN.com
+    keywords: *tcg
+    exclude: *not_cards
+    max_price: 250            # ignore anything above this
+    interval: 90
+    enabled: false
