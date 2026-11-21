@@ -141,6 +141,31 @@
   justify-content: space-between;
   height: 60px;
 }
+.pk-top-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.pk-wild-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  color: var(--fg-2);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, opacity 0.2s;
+}
+.pk-wild-btn:hover {
+  color: var(--fg);
+  border-color: var(--line);
+  background: var(--bg-2);
+}
+.pk-wild-btn[aria-pressed="false"] {
+  opacity: 0.45;
+}
 .pk-back {
   font-family: var(--f-num);
   font-size: 12.5px;
@@ -444,7 +469,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
   gap: 14px;
-  padding-top: 8px;
+  padding-top: 34px; /* headroom for whoever is walking along the first row */
 }
 .pk-card {
   display: flex;
@@ -787,6 +812,50 @@
 }
 .pk-sheet td.n {
   font-family: var(--f-num);
+}
+
+/* ----------------------------------------------------------- wild pokémon */
+/* Two click-through layers: one scrolls with the page (walkers stand on the
+   cards), one is pinned to the screen (flyers pass over everything). */
+.pk-wild {
+  pointer-events: none;
+  overflow: hidden;
+}
+.pk-wild.page {
+  position: absolute;
+  inset: 0;
+  z-index: 11; /* in front of cards and toolbar; sprites tuck behind the bar when it is pinned */
+}
+.pk-wild.sky {
+  position: fixed;
+  inset: 0;
+  z-index: 15; /* above the toolbar, below the detail sheet */
+}
+.pk-mon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+}
+.pk-mon img {
+  display: block;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.pk-wild.page .pk-mon img {
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.35));
+}
+.pk-wild.sky .pk-mon img {
+  filter: drop-shadow(0 16px 12px rgba(0, 0, 0, 0.3));
+}
+@media print {
+  .pk-wild {
+    display: none;
+  }
 }
 
 /* -------------------------------------------------------------- keyframes */

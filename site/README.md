@@ -59,6 +59,12 @@ linked from the home page, and marked `noindex`. Ways in: the URL, typing
   `/pokemon/`; leave it empty to show a placeholder.
 - **Hero images:** the fan at the top uses `public/pokemon/hero/<card id>.webp`
   when that file exists, otherwise the card's own photo.
+- **Wild Pokémon:** `Wild.tsx` animates sprites from `public/pokemon/sprites/`.
+  Walkers stroll along the card tops, flyers cross the screen, Gengar and
+  Haunter peek from behind cards. The poké ball button in the top bar turns
+  them off; they are also off when the visitor prefers reduced motion. To add
+  one, drop a GIF in the sprites folder and add a line to the lists at the top
+  of `Wild.tsx`.
 - **Code:** `src/app/pokemon/` (`page.tsx`, `Binder.tsx`, `pokemon.css`). All
   styles are scoped to the page.
 - `/pokemon#<card id>` opens that card directly. ← and → step between cards.

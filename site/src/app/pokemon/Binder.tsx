@@ -4,6 +4,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
+import Wild from "./Wild";
 import type { Estimate, ViewCard as Card } from "./types";
 
 const BASE = "/pokemon/";
@@ -159,6 +160,24 @@ export default function Binder({ cards }: { cards: Card[] }) {
   const [sort, setSort] = useState<Sort>("value");
   const [q, setQ] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);
+  // Wild Pokémon wander the page unless switched off (remembered per browser).
+  const [wild, setWild] = useState(true);
+  useEffect(() => {
+    let off = false;
+    try {
+      off = localStorage.getItem("pk-wild") === "off";
+    } catch {}
+    if (!off) return;
+    const raf = requestAnimationFrame(() => setWild(false));
+    return () => cancelAnimationFrame(raf);
+  }, []);
+  const toggleWild = () =>
+    setWild((w) => {
+      try {
+        localStorage.setItem("pk-wild", w ? "off" : "on");
+      } catch {}
+      return !w;
+    });
   const closeBtn = useRef<HTMLButtonElement>(null);
   const returnTo = useRef<HTMLElement | null>(null);
 
@@ -289,7 +308,24 @@ export default function Binder({ cards }: { cards: Card[] }) {
         <Link href="/" className="pk-back">
           <span aria-hidden>←</span> bilalsabry.com
         </Link>
-        <ThemeToggle />
+        <span className="pk-top-tools">
+          <button
+            type="button"
+            className="pk-wild-btn"
+            onClick={toggleWild}
+            aria-pressed={wild}
+            aria-label={wild ? "Turn wild Pokémon off" : "Turn wild Pokémon on"}
+            title={wild ? "Wild Pokémon: on" : "Wild Pokémon: off"}
+          >
+            {/* poké ball */}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+              <circle cx="12" cy="12" r="9" />
+              <path d="M3 12h6M15 12h6" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </button>
+          <ThemeToggle />
+        </span>
       </header>
 
       <section className="pk-hero pk-wrap">
@@ -425,6 +461,8 @@ export default function Binder({ cards }: { cards: Card[] }) {
           <div className="pk-empty">No cards match that. Try a different filter or search.</div>
         </div>
       )}
+
+      <Wild enabled={wild} paused={openId !== null} />
 
       <footer className="pk-foot pk-wrap">
         Estimates are ranges from recent sold listings and price guides, before selling fees.
