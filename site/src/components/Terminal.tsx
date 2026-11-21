@@ -152,6 +152,13 @@ export default function Terminal() {
           downloadVCard();
           print("sys", "downloading Bilal-Sabry.vcf");
           break;
+        // Unlisted on purpose. Not in `help`.
+        case "pokemon":
+        case "pokémon":
+        case "binder":
+          print("sys", "a wild binder appeared → /pokemon");
+          setTimeout(() => window.location.assign("/pokemon"), 500);
+          break;
         case "neofetch":
         case "fetch":
           print("out", [...BANNER, "", ...neofetch()]);

@@ -27,7 +27,7 @@ export default function CommandPalette() {
   const actions = useMemo(() => buildActions(toast), []);
 
   const results = useMemo(() => {
-    if (!q.trim()) return actions;
+    if (!q.trim()) return actions.filter((a) => !a.hidden);
     return actions
       .map((a) => ({
         a,
@@ -38,6 +38,11 @@ export default function CommandPalette() {
         ),
       }))
       .filter((r) => r.s > 0)
+      .filter(
+        (r) =>
+          !r.a.hidden ||
+          (q.trim().length >= 3 && `${r.a.label} ${r.a.keywords ?? ""}`.toLowerCase().includes(q.trim().toLowerCase()))
+      )
       .sort((x, y) => y.s - x.s)
       .map((r) => r.a);
   }, [q, actions]);

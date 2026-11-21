@@ -48,6 +48,19 @@ src/
 - `sitemap.xml`, `robots.txt`, web manifest, Open Graph card, JSON-LD Person.
 - Respects `prefers-reduced-motion`. Clean print stylesheet.
 
+## The binder (`/pokemon`)
+
+An unlisted page for the Pokémon card collection. It is not in the sitemap, not
+linked from the home page, and marked `noindex`. Ways in: the URL, typing
+"pokemon" in the ⌘K palette, or `pokemon` in the terminal.
+
+- **Data:** `public/pokemon/cards.json`. To update prices, replace that file.
+- **Photos:** `public/pokemon/img/`. A card's `img` field is a path relative to
+  `/pokemon/`; leave it empty to show a placeholder.
+- **Code:** `src/app/pokemon/` (`page.tsx`, `Binder.tsx`, `pokemon.css`). All
+  styles are scoped to the page.
+- `/pokemon#<card id>` opens that card directly. ← and → step between cards.
+
 ## Deploying (Vercel)
 
 Root Directory is `site`. Production deploys from `main`. Domain

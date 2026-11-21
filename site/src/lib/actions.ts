@@ -13,6 +13,8 @@ export type Action = {
   hint?: string; // right-aligned meta (e.g. "Section", "↗")
   keywords?: string;
   group: "Navigate" | "Connect" | "Work" | "Fun";
+  /** Easter egg: left out of the list until the search text matches it. */
+  hidden?: boolean;
   run: () => void;
 };
 
@@ -122,6 +124,15 @@ export function buildActions(onToast: (m: string) => void): Action[] {
     }));
 
   const fun: Action[] = [
+    {
+      id: "pokemon",
+      label: "Open the binder",
+      hint: "/pokemon",
+      keywords: "pokemon pokémon cards tcg binder ledger pikachu collection gotta catch",
+      group: "Fun",
+      hidden: true,
+      run: () => window.location.assign("/pokemon"),
+    },
     {
       id: "theme",
       label: "Toggle dark mode",
