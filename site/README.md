@@ -57,6 +57,8 @@ linked from the home page, and marked `noindex`. Ways in: the URL, typing
 - **Data:** `public/pokemon/cards.json`. To update prices, replace that file.
 - **Photos:** `public/pokemon/img/`. A card's `img` field is a path relative to
   `/pokemon/`; leave it empty to show a placeholder.
+- **Hero images:** the fan at the top uses `public/pokemon/hero/<card id>.webp`
+  when that file exists, otherwise the card's own photo.
 - **Code:** `src/app/pokemon/` (`page.tsx`, `Binder.tsx`, `pokemon.css`). All
   styles are scoped to the page.
 - `/pokemon#<card id>` opens that card directly. ← and → step between cards.

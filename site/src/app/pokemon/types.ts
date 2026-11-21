@@ -19,3 +19,11 @@ export type Card = {
   img: string; // relative to /pokemon/, may be empty
   history: Estimate[];
 };
+
+/** A card plus what the server works out at build time. */
+export type ViewCard = Card & {
+  /** width / height of the photo, or null when there is no photo */
+  ar: number | null;
+  /** optional clean image for the hero fan: public/pokemon/hero/<id>.webp */
+  hero?: { src: string; ar: number };
+};

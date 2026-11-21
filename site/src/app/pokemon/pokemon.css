@@ -131,6 +131,7 @@
     radial-gradient(620px 320px at 12% -4%, rgba(90, 209, 214, 0.2), transparent 70%),
     radial-gradient(760px 380px at 62% -12%, rgba(138, 124, 240, 0.22), transparent 70%),
     radial-gradient(520px 300px at 96% 14%, rgba(242, 154, 199, 0.18), transparent 70%);
+  -webkit-mask-image: linear-gradient(#000 55%, transparent);
   mask-image: linear-gradient(#000 55%, transparent);
 }
 
@@ -195,7 +196,7 @@
   position: relative;
   width: calc(var(--fan-dx) * 2 + var(--fan-h) * 0.82);
   height: calc(var(--fan-h) + 34px);
-  margin-right: 8px;
+  margin-right: 26px;
 }
 .pk-fan-card {
   position: absolute;
@@ -233,9 +234,11 @@
   --rot: 9deg;
   z-index: 2;
 }
-.pk-fan-card .pk-cardimg img {
+.pk-cardimg.fan {
   height: var(--fan-h);
-  width: auto;
+  width: calc(var(--fan-h) * var(--ar));
+  /* real cards have rounded corners; this also trims the scan's white edge */
+  border-radius: 4.6% / 3.3%;
 }
 
 /* ------------------------------------------------------------- card image */
@@ -254,6 +257,10 @@
 }
 .pk-cardimg img {
   display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  -webkit-user-select: none;
   user-select: none;
 }
 .pk-cardimg::before,
@@ -393,6 +400,16 @@
   border: 1px solid var(--line);
   border-radius: 12px;
 }
+.pk-bar select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 34px;
+  cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--fg-2) 50%), linear-gradient(135deg, var(--fg-2) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 55%, calc(100% - 13px) 55%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
 .pk-bar input {
   flex: 1 1 180px;
 }
@@ -453,25 +470,37 @@
 /* The sleeve: a fixed 3:4 pocket; the photo is fitted inside it. */
 .pk-thumb {
   position: relative;
-  display: grid;
-  place-items: center;
-  aspect-ratio: 3 / 4;
-  container-type: size;
-  padding: 10px;
+  display: block;
+  width: 100%;
+  flex: none;
   border-radius: 9px;
   background:
     radial-gradient(120% 90% at 50% 0%, var(--accent-soft), transparent 70%),
     var(--pk-sleeve);
 }
-.pk-thumb .pk-cardimg {
+/* spacer gives the pocket its 3:4 height in every browser */
+.pk-thumb::before {
+  content: "";
+  display: block;
+  padding-top: 133.333%;
+}
+/* inner area keeps the same 3:4 proportion, inset 5% on every side */
+.pk-thumb-in {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  bottom: 5%;
+  left: 5%;
+}
+.pk-cardimg.thumb {
   --foil: 0.3;
+  position: absolute;
   border-radius: 5px;
 }
-.pk-thumb .pk-cardimg img {
-  width: auto;
-  height: auto;
-  max-width: 100cqw;
-  max-height: 100cqh;
+.pk-thumb > .pk-ph {
+  position: absolute;
+  inset: 0;
+  align-content: center;
 }
 .pk-ph {
   display: grid;
@@ -645,9 +674,9 @@
   padding: 4px max(18px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 28px) 18px;
 }
 .pk-stage {
-  display: grid;
-  place-items: center;
-  container-type: inline-size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 280px;
   padding: 30px 18px;
   border-radius: 16px;
@@ -659,14 +688,14 @@
 }
 .pk-cardimg.big {
   --foil: 0.55;
+  flex: none;
+  /* as tall as allowed, but never wider than the stage */
+  width: min(100%, calc(min(440px, 56vh) * var(--ar)));
   border-radius: 10px;
   animation: pk-flip 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
 }
 .pk-cardimg.big img {
-  width: auto;
   height: auto;
-  max-width: 100cqw;
-  max-height: min(440px, 56vh);
 }
 .pk-sheet h2 {
   font-weight: 700;

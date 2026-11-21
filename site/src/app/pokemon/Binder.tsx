@@ -4,7 +4,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
-import type { Card, Estimate } from "./types";
+import type { Estimate, ViewCard as Card } from "./types";
 
 const BASE = "/pokemon/";
 const OUTLOOK: Record<string, [string, string]> = {
@@ -105,10 +105,50 @@ function Spark({ history }: { history: Estimate[] }) {
   );
 }
 
-function CardImage({ c, eager, className = "" }: { c: Card; eager?: boolean; className?: string }) {
+const SLEEVE = 3 / 4; // the pocket every grid photo is fitted into
+const FALLBACK_AR = 0.72;
+
+/** The photo, wrapped tightly so glare and foil sit exactly on the card.
+ *  Sizes are plain percentages worked out from the image's own proportions,
+ *  which lays out identically in every browser. */
+function CardImage({
+  src,
+  alt,
+  ar,
+  variant,
+  eager,
+}: {
+  src: string;
+  alt: string;
+  ar: number | null;
+  variant: "thumb" | "fan" | "big";
+  eager?: boolean;
+}) {
+  const a = ar || FALLBACK_AR;
+  let style: React.CSSProperties = cssVars({ "--ar": a.toFixed(4) });
+  if (variant === "thumb") {
+    // fit inside a 3:4 box, centred
+    const w = a <= SLEEVE ? (a / SLEEVE) * 100 : 100;
+    const h = a <= SLEEVE ? 100 : (SLEEVE / a) * 100;
+    style = {
+      ...style,
+      width: `${w.toFixed(2)}%`,
+      height: `${h.toFixed(2)}%`,
+      left: `${((100 - w) / 2).toFixed(2)}%`,
+      top: `${((100 - h) / 2).toFixed(2)}%`,
+    };
+  }
   return (
-    <span className={`pk-cardimg ${className}`}>
-      <img src={BASE + c.img} alt={c.name} loading={eager ? "eager" : "lazy"} decoding="async" draggable={false} />
+    <span className={`pk-cardimg ${variant}`} style={style}>
+      <img
+        src={BASE + src}
+        alt={alt}
+        width={Math.round(600 * a)}
+        height={600}
+        loading={eager ? "eager" : "lazy"}
+        decoding="async"
+        draggable={false}
+      />
     </span>
   );
 }
@@ -272,7 +312,7 @@ export default function Binder({ cards }: { cards: Card[] }) {
                 aria-label={`Open ${c.name}, ${money2(c.low)} to ${money2(c.high)}`}
                 {...TILT_TILE}
               >
-                <CardImage c={c} eager />
+                <CardImage src={c.hero?.src ?? c.img} alt={c.name} ar={c.hero?.ar ?? c.ar} variant="fan" eager />
               </button>
             ))}
           </div>
@@ -353,7 +393,9 @@ export default function Binder({ cards }: { cards: Card[] }) {
             >
               <span className="pk-thumb">
                 {c.img ? (
-                  <CardImage c={c} eager={i < 6} />
+                  <span className="pk-thumb-in">
+                    <CardImage src={c.img} alt={c.name} ar={c.ar} variant="thumb" eager={i < 6} />
+                  </span>
                 ) : (
                   <span className="pk-ph">
                     {c.name}
@@ -413,7 +455,11 @@ export default function Binder({ cards }: { cards: Card[] }) {
 
             <div className="pk-sheet-body" key={open.id}>
               <div className="pk-stage" {...TILT_STAGE}>
-                {open.img ? <CardImage c={open} eager className="big" /> : <span className="pk-ph big">No photo yet</span>}
+                {open.img ? (
+                  <CardImage src={open.img} alt={open.name} ar={open.ar} variant="big" eager />
+                ) : (
+                  <span className="pk-ph big">No photo yet</span>
+                )}
               </div>
 
               <div>

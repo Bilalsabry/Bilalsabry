@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 import data from "../../../public/pokemon/cards.json";
 import Binder from "./Binder";
-import type { Card } from "./types";
+import path from "node:path";
+import { imageSize } from "./imageSize";
+import type { Card, ViewCard } from "./types";
 import "./pokemon.css";
 
 const display = Bricolage_Grotesque({
@@ -27,10 +29,29 @@ export const metadata: Metadata = {
   },
 };
 
+const DIR = path.join(process.cwd(), "public", "pokemon");
+const ratio = (rel: string) => {
+  const s = imageSize(path.join(DIR, rel));
+  return s && s[1] ? s[0] / s[1] : null;
+};
+
+/** Runs at build time: measures each photo and picks up optional hero images. */
+function prepare(cards: Card[]): ViewCard[] {
+  return cards.map((c) => {
+    const heroRel = `hero/${c.id}.webp`;
+    const heroAr = ratio(heroRel);
+    return {
+      ...c,
+      ar: c.img ? ratio(c.img) : null,
+      ...(heroAr ? { hero: { src: heroRel, ar: heroAr } } : {}),
+    };
+  });
+}
+
 export default function PokemonPage() {
   return (
     <div className={`pk ${display.variable}`}>
-      <Binder cards={data.cards as Card[]} />
+      <Binder cards={prepare(data.cards as Card[])} />
     </div>
   );
 }
